@@ -7,21 +7,33 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C0906D11C04FCD6004C1E22 /* DateTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0906CF1C04FCD6004C1E22 /* DateTableCell.swift */; };
+		0C0906D21C04FCD6004C1E22 /* DateTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C0906D01C04FCD6004C1E22 /* DateTableViewCell.xib */; };
 		0C6855D71C04FBB300DF4D2D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6855D61C04FBB300DF4D2D /* AppDelegate.swift */; };
-		0C6855D91C04FBB300DF4D2D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6855D81C04FBB300DF4D2D /* ViewController.swift */; };
 		0C6855DC1C04FBB300DF4D2D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C6855DA1C04FBB300DF4D2D /* Main.storyboard */; };
 		0C6855DE1C04FBB300DF4D2D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C6855DD1C04FBB300DF4D2D /* Assets.xcassets */; };
 		0C6855E11C04FBB300DF4D2D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C6855DF1C04FBB300DF4D2D /* LaunchScreen.storyboard */; };
+		0C6855E91C04FBFD00DF4D2D /* LibraryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6855E81C04FBFD00DF4D2D /* LibraryTableViewController.swift */; };
+		0C6855EB1C04FC0700DF4D2D /* ProjectTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6855EA1C04FC0700DF4D2D /* ProjectTableViewController.swift */; };
+		0C6855ED1C04FC1F00DF4D2D /* EntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6855EC1C04FC1F00DF4D2D /* EntryViewController.swift */; };
+		0C6855F11C04FC3500DF4D2D /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6855F01C04FC3500DF4D2D /* Project.swift */; };
+		0C6855F31C04FC3A00DF4D2D /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6855F21C04FC3A00DF4D2D /* Entry.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0C0906CF1C04FCD6004C1E22 /* DateTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateTableCell.swift; sourceTree = "<group>"; };
+		0C0906D01C04FCD6004C1E22 /* DateTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DateTableViewCell.xib; sourceTree = "<group>"; };
 		0C6855D31C04FBB300DF4D2D /* EngiN_1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EngiN_1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C6855D61C04FBB300DF4D2D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0C6855D81C04FBB300DF4D2D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		0C6855DB1C04FBB300DF4D2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0C6855DD1C04FBB300DF4D2D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0C6855E01C04FBB300DF4D2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0C6855E21C04FBB300DF4D2D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0C6855E81C04FBFD00DF4D2D /* LibraryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryTableViewController.swift; sourceTree = "<group>"; };
+		0C6855EA1C04FC0700DF4D2D /* ProjectTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectTableViewController.swift; sourceTree = "<group>"; };
+		0C6855EC1C04FC1F00DF4D2D /* EntryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryViewController.swift; sourceTree = "<group>"; };
+		0C6855F01C04FC3500DF4D2D /* Project.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		0C6855F21C04FC3A00DF4D2D /* Entry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,7 +67,13 @@
 			isa = PBXGroup;
 			children = (
 				0C6855D61C04FBB300DF4D2D /* AppDelegate.swift */,
-				0C6855D81C04FBB300DF4D2D /* ViewController.swift */,
+				0C6855E81C04FBFD00DF4D2D /* LibraryTableViewController.swift */,
+				0C6855EA1C04FC0700DF4D2D /* ProjectTableViewController.swift */,
+				0C6855EC1C04FC1F00DF4D2D /* EntryViewController.swift */,
+				0C6855F01C04FC3500DF4D2D /* Project.swift */,
+				0C6855F21C04FC3A00DF4D2D /* Entry.swift */,
+				0C0906CF1C04FCD6004C1E22 /* DateTableCell.swift */,
+				0C0906D01C04FCD6004C1E22 /* DateTableViewCell.xib */,
 				0C6855DA1C04FBB300DF4D2D /* Main.storyboard */,
 				0C6855DD1C04FBB300DF4D2D /* Assets.xcassets */,
 				0C6855DF1C04FBB300DF4D2D /* LaunchScreen.storyboard */,
@@ -126,6 +144,7 @@
 				0C6855E11C04FBB300DF4D2D /* LaunchScreen.storyboard in Resources */,
 				0C6855DE1C04FBB300DF4D2D /* Assets.xcassets in Resources */,
 				0C6855DC1C04FBB300DF4D2D /* Main.storyboard in Resources */,
+				0C0906D21C04FCD6004C1E22 /* DateTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,8 +155,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C6855D91C04FBB300DF4D2D /* ViewController.swift in Sources */,
+				0C6855F31C04FC3A00DF4D2D /* Entry.swift in Sources */,
+				0C6855E91C04FBFD00DF4D2D /* LibraryTableViewController.swift in Sources */,
+				0C6855ED1C04FC1F00DF4D2D /* EntryViewController.swift in Sources */,
+				0C6855EB1C04FC0700DF4D2D /* ProjectTableViewController.swift in Sources */,
+				0C0906D11C04FCD6004C1E22 /* DateTableCell.swift in Sources */,
 				0C6855D71C04FBB300DF4D2D /* AppDelegate.swift in Sources */,
+				0C6855F11C04FC3500DF4D2D /* Project.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,6 +311,7 @@
 				0C6855E71C04FBB300DF4D2D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
