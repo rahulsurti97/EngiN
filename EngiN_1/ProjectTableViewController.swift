@@ -63,7 +63,7 @@ class ProjectTableViewController: UITableViewController {
             let textField = alert.textFields![0] as UITextField
             let myEntryTitle = textField.text!
             
-            // Trailing closure returns Bool, represents if title entered by user is not previously used.
+            // Closure returns Bool, represents if title entered by user is not previously used.
             let titleIsOK: Bool = {() -> Bool in
                 for entry in self.entries {
                     if let entTitle = (entry as? Entry)?.entryTitle {

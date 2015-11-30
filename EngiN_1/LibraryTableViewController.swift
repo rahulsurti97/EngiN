@@ -50,7 +50,7 @@ class LibraryTableViewController: UITableViewController {
             let textField = alert.textFields![0] as UITextField
             let myProjectTitle = textField.text!
             
-            // Trailing closure returns Bool, represents if title entered by user is not previously used.
+            // Closure returns Bool, represents if title entered by user is not previously used.
             let titleIsOK: Bool = {() -> Bool in
                 for project in self.projects {
                     if let projTitle = (project as? Project)?.projectTitle {
@@ -167,6 +167,7 @@ class LibraryTableViewController: UITableViewController {
                 
                 // Gets ProjectTableViewController and sets properties
                 let controller = segue.destinationViewController as! ProjectTableViewController
+                
                 //self.delegate = controller
                 controller.projectItem = project
                 controller.navigationItem.title = project.projectTitle
