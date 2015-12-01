@@ -8,9 +8,17 @@
 
 import UIKit
 
+protocol EntryDelegate {
+    func addEntry(controller: ProjectTableViewController, didAddEntry: Entry, toProject: String)
+    func removeEntry(controller: ProjectTableViewController, didRemoveEntry: String, atProject: String)
+    func updateEntry(controller: ProjectTableViewController, didUpdateEntry: Entry, atProject: String)
+}
+
 class ProjectTableViewController: UITableViewController {
 
     var entries = [AnyObject]()
+    
+    var delegate: EntryDelegate?
     
     var projectItem: Project? {
         didSet {
@@ -18,6 +26,8 @@ class ProjectTableViewController: UITableViewController {
             self.configureView()
         }
     }
+    
+    
     
     func configureView() {
         // Update the user interface for the project item.
@@ -86,7 +96,6 @@ class ProjectTableViewController: UITableViewController {
             }
         }))
 
-        
         // Present the alert.
         self.presentViewController(alert, animated: true, completion: nil)
     }
@@ -94,24 +103,30 @@ class ProjectTableViewController: UITableViewController {
 
     
     func insertNewEntry(myEntryTitle: String) {
-        // Creates Entry object
-        let entry = Entry()
+        // Creates Entry object.
+        let myEntry = Entry()
         
-        // Sets entry's entryTitle variable to title entered by user
-        entry.entryTitle = myEntryTitle
+        // Sets entry's entryTitle variable to title entered by user.
+        myEntry.entryTitle = myEntryTitle
         
-        // Sets entry's entryDate variable to current date
+        // Sets entry's entryDate variable to current date.
         let todaysDate:NSDate = NSDate()
         let dateFormatter:NSDateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy"
         let dateInFormat:String = dateFormatter.stringFromDate(todaysDate)
-        entry.entryDate = dateInFormat
+        myEntry.entryDate = dateInFormat
         
-        // Inserts entry in the entries array
-        entries.insert(entry, atIndex: 0)
+        // Inserts entry in the entries array.
+        entries.insert(myEntry, atIndex: 0)
         let indexPath = NSIndexPath(forRow: 0, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-        
+
+        // Inserts the entry into the project at the scope of the library.
+        if let delegate = self.delegate {
+            if let project = self.projectItem {
+                delegate.addEntry(self, didAddEntry: myEntry, toProject: project.projectTitle)
+            }
+        }
     }
     
     // MARK: - Table view data source
@@ -124,7 +139,7 @@ class ProjectTableViewController: UITableViewController {
         return entries.count
     }
 
-    // Instantiates cells to show all entries in the project
+    // Instantiates cells to show all entries in the project.
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("DateCell", forIndexPath: indexPath) as! DateTableCell
         
@@ -134,7 +149,7 @@ class ProjectTableViewController: UITableViewController {
         return cell
     }
 
-    // Allows user to delete entries
+    // Allows user to delete entries.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return true
     }
@@ -143,13 +158,13 @@ class ProjectTableViewController: UITableViewController {
         performSegueWithIdentifier("showEntry", sender: UITableViewCell.self)
     }
 
-    // Allows user to delete entries from project
+    // Allows user to delete entries from project.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            // Prompts user to confirm removal of entry
+            // Prompts user to confirm removal of entry.
             let alert = UIAlertController(title: "Are you sure you want to delete this entry?", message: "This action cannot be undone", preferredStyle: .Alert)
             
-            // Do not remove entry if user hits "Cancel"
+            // Do not remove entry if user hits "Cancel".
             alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action) -> Void in
                 // Do nothing
             }))
@@ -157,6 +172,12 @@ class ProjectTableViewController: UITableViewController {
             // Delete entry if user hits "Delete".
             alert.addAction(UIAlertAction(title: "Delete", style: .Default, handler: { (action) -> Void in
                 self.entries.removeAtIndex(indexPath.row)
+                // Removes the entry of the project at the scope of the library.
+                if let delegate = self.delegate {
+                    if let project = self.projectItem {
+                        delegate.removeEntry(self, didRemoveEntry: self.entries[indexPath.row] as! String, atProject: project.projectTitle)
+                    }
+                }
                 tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
             }))
             
@@ -171,7 +192,7 @@ class ProjectTableViewController: UITableViewController {
     // MARK: - Navigation
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Sets DetailViewController to show the specific entry selected by the user
+        // Sets DetailViewController to show the specific entry selected by the user.
         if segue.identifier == "showEntry" {
             if let indexPath = self.tableView.indexPathForSelectedRow {
                 // Gets entry from entry array
@@ -185,8 +206,3 @@ class ProjectTableViewController: UITableViewController {
         }
     }
 }
-/*extension ProjectTableViewController: ProjectSelectionDelegate {
-    func projectSelected(newProject: Project) {
-        entries = newProject.projectEntries
-    }
-}*/

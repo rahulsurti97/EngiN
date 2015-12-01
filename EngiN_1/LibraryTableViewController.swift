@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LibraryTableViewController: UITableViewController {
+class LibraryTableViewController: UITableViewController, EntryDelegate {
     
     var projects = [AnyObject]()
     
@@ -166,15 +166,54 @@ class LibraryTableViewController: UITableViewController {
                 let project = projects[indexPath.row] as! Project
                 
                 // Gets ProjectTableViewController and sets properties
-                let controller = segue.destinationViewController as! ProjectTableViewController
-                
-                //self.delegate = controller
-                controller.projectItem = project
-                controller.navigationItem.title = project.projectTitle
+                let controller = segue.destinationViewController as? ProjectTableViewController
+                if let c = controller {
+                    c.delegate = self
+                }
+                controller!.projectItem = project
+                controller!.navigationItem.title = project.projectTitle
+            }
+        }
+    }
+    
+    // Inserts new entry to correct project in projects array
+    func addEntry(controller: ProjectTableViewController, didAddEntry: Entry, toProject: String) {
+        for project in self.projects {
+            if let p = (project as? Project) {
+                if toProject == p.projectTitle {
+                    p.projectEntries.insert(didAddEntry, atIndex: 0)
+                }
+            }
+        }
+    }
+    
+    // Removes correct entry at correct project in projects array
+    func removeEntry(controller: ProjectTableViewController, didRemoveEntry: String, atProject: String) {
+        for project in self.projects {
+            if let p = (project as? Project) {
+                if atProject == p.projectTitle {
+                    for var i = 0; i < p.projectEntries.count; i++ {
+                        if didRemoveEntry == p.projectEntries[i].entryTitle {
+                            p.projectEntries.removeAtIndex(i)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    // Updates correct entry to correct project in projects array
+    func updateEntry(controller: ProjectTableViewController, didUpdateEntry: Entry, atProject: String) {
+        for project in self.projects {
+            if let p = (project as? Project) {
+                if atProject == p.projectTitle {
+                    for var i = 0; i < p.projectEntries.count; i++ {
+                        if didUpdateEntry.entryTitle == p.projectEntries[i].entryTitle {
+                            p.projectEntries[i] = didUpdateEntry
+                        }
+                    }
+                }
             }
         }
     }
 }
-/*protocol ProjectSelectionDelegate: class {
-    func projectSelected(newProject: Project)
-}*/
