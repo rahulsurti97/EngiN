@@ -12,6 +12,7 @@ class LibraryTableViewController: UITableViewController, EntryDelegate {
     
     var projects = [AnyObject]()
     
+    //var first: Bool = true
     override func viewDidLoad() {
         super.viewDidLoad()
         self.clearsSelectionOnViewWillAppear = true
@@ -19,6 +20,8 @@ class LibraryTableViewController: UITableViewController, EntryDelegate {
         self.navigationController?.toolbarHidden = false
         self.setToolbarItems([self.editButtonItem()], animated: true)
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "DateCell")
+        //insertNewProject("Sample Project")
+        //first = false
     }
     
     override func didReceiveMemoryWarning() {
@@ -82,22 +85,20 @@ class LibraryTableViewController: UITableViewController, EntryDelegate {
     
     func insertNewProject(myProjectTitle: String) {
         // Creates Project object
-        let project = Project()
-        
-        // Sets project's projectTitle variable to title entered by user
-        project.projectTitle = myProjectTitle
-        
-        // Sets project's projectDate variable to current date
-        let todaysDate:NSDate = NSDate()
-        let dateFormatter:NSDateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "MM/dd/yyyy"
-        let dateInFormat:String = dateFormatter.stringFromDate(todaysDate)
-        project.projectDate = dateInFormat
+        let project = Project(title: myProjectTitle, date: currentDate(), entries: [])
+        //if first { project.projectEntries = [Entry(title: "Sample Entry", date: currentDate(), text: "Sample Text")] }
         
         // Inserts project in the projects array
         projects.insert(project, atIndex: 0)
         let indexPath = NSIndexPath(forRow: 0, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+    }
+    
+    func currentDate() -> String {
+        let todaysDate:NSDate = NSDate()
+        let dateFormatter:NSDateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yyyy"
+        return dateFormatter.stringFromDate(todaysDate)
     }
     
     // MARK: - Table view data source
@@ -110,10 +111,10 @@ class LibraryTableViewController: UITableViewController, EntryDelegate {
         return projects.count
     }
     
+    
     // Instantiates cells to show all projects in the project array
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "DateCell")
-        
         let project = projects[indexPath.row] as! Project
         cell.textLabel?.text = project.projectTitle
         cell.detailTextLabel?.text = project.projectDate
@@ -156,6 +157,10 @@ class LibraryTableViewController: UITableViewController, EntryDelegate {
         }
     }
     
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Projects"
+    }
+    
     
     // MARK: - Navigation
     
@@ -168,9 +173,9 @@ class LibraryTableViewController: UITableViewController, EntryDelegate {
                 
                 // Gets ProjectTableViewController and sets properties
                 let controller = segue.destinationViewController as? ProjectMenuTableViewController
-                /*if let c = controller {
+                if let c = controller {
                     c.delegate = self
-                }*/
+                }
                 controller!.project = project
                 controller!.navigationItem.title = " \(project.projectTitle) Menu"
             }
@@ -186,13 +191,13 @@ class LibraryTableViewController: UITableViewController, EntryDelegate {
                     case 2: //Update Entry
                         for var i = 0; i < p.projectEntries.count; i++ {
                             if newEntry.entryTitle == p.projectEntries[i].entryTitle {
-                                p.projectEntries.removeAtIndex(i)
+                                p.projectEntries[i] = newEntry
                             }
                         }
                     case 1: //Remove Entry
                         for var i = 0; i < p.projectEntries.count; i++ {
                             if newEntry.entryTitle == p.projectEntries[i].entryTitle {
-                                p.projectEntries[i] = entry
+                                p.projectEntries.removeAtIndex(i)
                             }
                         }
                     default://Add Entry
@@ -203,5 +208,17 @@ class LibraryTableViewController: UITableViewController, EntryDelegate {
                 }
             }
         }
+    }
+    
+    func getEntries(controller: ProjectTableViewController, atProject: String) -> [Entry] {
+        var entries: [Entry] = []
+        for project in self.projects {
+            if let p = (project as? Project) {
+                if atProject == p.projectTitle {
+                    entries = p.projectEntries
+                }
+            }
+        }
+        return entries
     }
 }

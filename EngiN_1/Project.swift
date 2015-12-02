@@ -10,7 +10,13 @@ import Foundation
 import UIKit
 
 class Project {
-    var projectTitle: String = "Entry Title"
-    var projectDate: String = "Entry Date"
-    var projectEntries: [Entry] = []
+    var projectTitle: String
+    var projectDate: String
+    var projectEntries: [Entry]
+    
+    init(title: String, date: String, entries: [Entry]){
+        projectTitle = title
+        projectDate = date
+        projectEntries = entries
+    }
 }

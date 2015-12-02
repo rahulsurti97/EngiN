@@ -10,7 +10,13 @@ import Foundation
 import UIKit
 
 class Entry {
-    var entryTitle: String = "Entry Title"
-    var entryText: String = "Entry Text"
-    var entryDate: String = "Entry Date"
+    var entryTitle: String
+    var entryText: String
+    var entryDate: String
+    
+    init(title: String, date: String, text: String){
+        entryTitle = title
+        entryDate = date
+        entryText = text
+    }
 }

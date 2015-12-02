@@ -15,9 +15,18 @@ class ProjectMenuTableViewController: UITableViewController, EntryDelegate {
     
     var delegate: EntryDelegate?
     
+    @IBOutlet weak var entryCount: UILabel!
+    @IBOutlet weak var recentEntryDate: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if let p = project as Project? {
+            let count = p.projectEntries.count
+            if count == 1 { entryCount.text = "\(count) Entry" }
+            else          { entryCount.text = "\(count) Entries" }
+            recentEntryDate.text = p.projectEntries.first?.entryDate
+        }
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -95,7 +104,6 @@ class ProjectMenuTableViewController: UITableViewController, EntryDelegate {
         // Sets ProjectTableViewController to show the specific project selected by the user
         if segue.identifier == "showProject" {
             // Gets project from project array
-            //let project = projects[indexPath.row] as! Project
             
             // Gets ProjectTableViewController and sets properties
             let controller = segue.destinationViewController as? ProjectTableViewController
@@ -110,5 +118,9 @@ class ProjectMenuTableViewController: UITableViewController, EntryDelegate {
     
     func updateEntry(controller: ProjectTableViewController, newEntry: Entry, atProject: String, type: Int) {
         delegate?.updateEntry(controller, newEntry: newEntry, atProject: atProject, type: type)
+    }
+    
+    func getEntries(controller: ProjectTableViewController, atProject: String) -> [Entry] {
+        return (delegate?.getEntries(controller, atProject: atProject))!
     }
 }

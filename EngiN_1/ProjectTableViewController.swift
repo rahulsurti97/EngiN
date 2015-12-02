@@ -100,17 +100,7 @@ class ProjectTableViewController: UITableViewController {
     
     func insertNewEntry(myEntryTitle: String) {
         // Creates Entry object.
-        let myEntry = Entry()
-        
-        // Sets entry's entryTitle variable to title entered by user.
-        myEntry.entryTitle = myEntryTitle
-        
-        // Sets entry's entryDate variable to current date.
-        let todaysDate:NSDate = NSDate()
-        let dateFormatter:NSDateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "MM/dd/yyyy"
-        let dateInFormat:String = dateFormatter.stringFromDate(todaysDate)
-        myEntry.entryDate = dateInFormat
+        let myEntry = Entry(title: myEntryTitle, date: currentDate(), text: "Sample Text")
         
         // Inserts entry in the entries array.
         entries.insert(myEntry, atIndex: 0)
@@ -123,6 +113,13 @@ class ProjectTableViewController: UITableViewController {
                 delegate.updateEntry(self, newEntry: myEntry, atProject: project.projectTitle, type: 0)
             }
         }
+    }
+    
+    func currentDate() -> String {
+        let todaysDate:NSDate = NSDate()
+        let dateFormatter:NSDateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yyyy"
+        return dateFormatter.stringFromDate(todaysDate)
     }
     
     // MARK: - Table view data source
@@ -173,7 +170,8 @@ class ProjectTableViewController: UITableViewController {
                 if let delegate = self.delegate {
                     if let project = self.projectItem {
                         let entry = self.entries[indexPath.row] as! Entry
-                        delegate.updateEntry(self, newEntry: entry, atProject: project.projectTitle, type: 1)                    }
+                        delegate.updateEntry(self, newEntry: entry, atProject: project.projectTitle, type: 1)
+                    }
                 }
                 self.entries.removeAtIndex(indexPath.row)
                 tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
