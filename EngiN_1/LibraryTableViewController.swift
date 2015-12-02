@@ -174,28 +174,25 @@ class LibraryTableViewController: UITableViewController, EntryDelegate {
         }
     }
     
-    
-    // Updates correct entry to correct project in projects array
-    func updateEntry(controller: ProjectTableViewController, newEntry: Entry, atProject: String, type: Int) {
+    // Updates entry to specified project in projects array.
+    func updateEntry(controller: ProjectTableViewController, newEntry: Entry, atProject: Project, type: Int) -> Project {
+        var projectToReturn: Project = Project()
+        // Find correct project to modify
         for project in self.projects {
             if let p = (project as? Project) {
-                if atProject == p.projectTitle {
+                if atProject.projectTitle == p.projectTitle {
+                    // Gets project to return; used to set labels in Entries section of Project Menu
+                    projectToReturn = p
+                    
+                    // Depending on if user added, deleted, or modified entry, update specified entry
                     switch type {
                     case 2: //Update Entry
                         for var i = 0; i < p.projectEntries.count; i++ {
-                            if newEntry.entryTitle == p.projectEntries[i].entryTitle {
-                                p.projectEntries[i] = newEntry
-                            }
+                            if newEntry.entryTitle == p.projectEntries[i].entryTitle { p.projectEntries[i] = newEntry }
                         }
                     case 1: //Remove Entry
                         for var i = 0; i < p.projectEntries.count; i++ {
-                            if newEntry.entryTitle == p.projectEntries[i].entryTitle {
-                                p.projectEntries.removeAtIndex(i)
-                            }
-                        }
-                    default://Add Entry
-                        if atProject == p.projectTitle {
-                            p.projectEntries.insert(newEntry, atIndex: 0)
+                            if newEntry.entryTitle == p.projectEntries[i].entryTitle { p.projectEntries.removeAtIndex(i) }
                         }
                     default://Add Entry
                             p.projectEntries.insert(newEntry, atIndex: 0)

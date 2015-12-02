@@ -9,7 +9,7 @@
 import UIKit
 
 protocol EntryDelegate {
-    func updateEntry(controller: ProjectTableViewController, newEntry: Entry, atProject: String, type: Int)
+    func updateEntry(controller: ProjectTableViewController, newEntry: Entry, atProject: Project, type: Int) -> Project
 }
 class ProjectTableViewController: UITableViewController {
 
@@ -104,8 +104,7 @@ class ProjectTableViewController: UITableViewController {
         // Inserts the entry into the project at the scope of the library.
         if let delegate = self.delegate {
             if let project = self.projectItem {
-                delegate.updateEntry(self, newEntry: myEntry, atProject: project.projectTitle, type: 0)
-                //delegate.addEntry(self, didAddEntry: myEntry, toProject: project.projectTitle)
+                delegate.updateEntry(self, newEntry: myEntry, atProject: project, type: 0)
             }
         }
     }
@@ -166,7 +165,7 @@ class ProjectTableViewController: UITableViewController {
                 if let delegate = self.delegate {
                     if let project = self.projectItem {
                         let entry = self.entries[indexPath.row] as! Entry
-                        delegate.updateEntry(self, newEntry: entry, atProject: project.projectTitle, type: 1)
+                        delegate.updateEntry(self, newEntry: entry, atProject: project, type: 1)
                     }
                 }
                 self.entries.removeAtIndex(indexPath.row)
