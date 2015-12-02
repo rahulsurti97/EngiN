@@ -9,10 +9,8 @@
 import UIKit
 
 protocol EntryDelegate {
-    func updateEntry(controller: ProjectTableViewController, newEntry: Entry, atProject: String, type: Int)
-    func getEntries(controller: ProjectTableViewController, atProject: String) -> [Entry]
+    func updateEntry(controller: ProjectTableViewController, newEntry: Entry, atProject: Project, type: Int) -> Project
 }
-
 class ProjectTableViewController: UITableViewController {
 
     var entries = [AnyObject]()
@@ -20,10 +18,8 @@ class ProjectTableViewController: UITableViewController {
     var delegate: EntryDelegate?
     
     var projectItem: Project? {
-        didSet {
-            // Update the view.
-            self.configureView()
-        }
+        // Update View if set.
+        didSet { self.configureView() }
     }
     
     func configureView() {
@@ -37,11 +33,14 @@ class ProjectTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.clearsSelectionOnViewWillAppear = true
-        //self.tableView = UITableView(frame: self.tableView.frame, style: .Grouped)
+        
+        // Creates add button in top right of navigation bar.
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "promptForTitle")
+        
+        // Enables toolbar and adds edit button in bottom left.
         self.setToolbarItems([self.editButtonItem()], animated: true)
-        //self.toolbarItems?.insert(self.editButtonItem(), atIndex: 0)
-        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "DateCell")
+        
+        // Update View
         self.configureView()
     }
 
@@ -55,21 +54,23 @@ class ProjectTableViewController: UITableViewController {
         // Create the alert controller.
         let alert: UIAlertController
         
+        // Prompts user to create a different title if the title was previously used.
         if firstAttempt { alert = UIAlertController(title: "Enter A Title", message: "", preferredStyle: .Alert) }
         else            { alert = UIAlertController(title: "Please enter a different title", message: "This title is already used.", preferredStyle: .Alert) }
         
         // Add the text field.
         alert.addTextFieldWithConfigurationHandler({ (textField) -> Void in textField.text = "" })
         
-        // Do not remove project if user hits "Cancel"
+        // Do not remove entry if user hits "Cancel"
         alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action) -> Void in /*Do nothing*/ }))
         
         // Grab the value from the text field, and create project with title when the user hits "Create".
         alert.addAction(UIAlertAction(title: "Create", style: .Default, handler: { (action) -> Void in
+            // Creates text field and saves input.
             let textField = alert.textFields![0] as UITextField
             let myEntryTitle = textField.text!
             
-            // Closure returns Bool, represents if title entered by user is not previously used.
+            // Determines if title is valid, ie. not previously used.
             let titleIsOK: Bool = {() -> Bool in
                 for entry in self.entries {
                     if let entTitle = (entry as? Entry)?.entryTitle {
@@ -81,22 +82,15 @@ class ProjectTableViewController: UITableViewController {
                 return true
             }()
             
-            // Switch for Bool titleIsOK, insert object if true, prompt again if false.
-            if titleIsOK {
-                self.firstAttempt = true
-                self.insertNewEntry(myEntryTitle)
-            }
-            else {
-                self.firstAttempt = false
-                self.promptForTitle()
-            }
+            // Insert entry and reset firstAttempt if title is valid, prompt again and set firstAttempt to false if invalid.
+            self.firstAttempt = titleIsOK
+            if titleIsOK { self.insertNewEntry(myEntryTitle) }
+            else         { self.promptForTitle() }
         }))
 
         // Present the alert.
         self.presentViewController(alert, animated: true, completion: nil)
     }
-    
-
     
     func insertNewEntry(myEntryTitle: String) {
         // Creates Entry object.
@@ -110,11 +104,12 @@ class ProjectTableViewController: UITableViewController {
         // Inserts the entry into the project at the scope of the library.
         if let delegate = self.delegate {
             if let project = self.projectItem {
-                delegate.updateEntry(self, newEntry: myEntry, atProject: project.projectTitle, type: 0)
+                delegate.updateEntry(self, newEntry: myEntry, atProject: project, type: 0)
             }
         }
     }
     
+    // Creates a String for the current date.
     func currentDate() -> String {
         let todaysDate:NSDate = NSDate()
         let dateFormatter:NSDateFormatter = NSDateFormatter()
@@ -124,18 +119,19 @@ class ProjectTableViewController: UITableViewController {
     
     // MARK: - Table view data source
 
+    // There must only be 1 section in Library.
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
+    // Number of rows must be equal to number of projects.
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return entries.count
     }
 
-    // Instantiates cells to show all entries in the project.
+    // Manages each cell in table.
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "DateCell")
-        
         
         let entry = entries[indexPath.row] as! Entry
         cell.textLabel?.text = entry.entryTitle
@@ -143,14 +139,15 @@ class ProjectTableViewController: UITableViewController {
         cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         return cell
     }
-
+    
+    // Segues to Entry when user selects row.
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        performSegueWithIdentifier("showEntry", sender: UITableViewCell.self)
+    }
+    
     // Allows user to delete entries.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return true
-    }
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        performSegueWithIdentifier("showEntry", sender: UITableViewCell.self)
     }
 
     // Allows user to delete entries from project.
@@ -160,9 +157,7 @@ class ProjectTableViewController: UITableViewController {
             let alert = UIAlertController(title: "Are you sure you want to delete this entry?", message: "This action cannot be undone", preferredStyle: .Alert)
             
             // Do not remove entry if user hits "Cancel".
-            alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action) -> Void in
-                // Do nothing
-            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action) -> Void in /* Do nothing */  }))
             
             // Delete entry if user hits "Delete".
             alert.addAction(UIAlertAction(title: "Delete", style: .Default, handler: { (action) -> Void in
@@ -170,7 +165,7 @@ class ProjectTableViewController: UITableViewController {
                 if let delegate = self.delegate {
                     if let project = self.projectItem {
                         let entry = self.entries[indexPath.row] as! Entry
-                        delegate.updateEntry(self, newEntry: entry, atProject: project.projectTitle, type: 1)
+                        delegate.updateEntry(self, newEntry: entry, atProject: project, type: 1)
                     }
                 }
                 self.entries.removeAtIndex(indexPath.row)
@@ -184,9 +179,14 @@ class ProjectTableViewController: UITableViewController {
         }
     }
 
+    // Sets title of section.
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Entries"
+    }
     
     // MARK: - Navigation
 
+    // Passes entry properties to Entry.
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Sets DetailViewController to show the specific entry selected by the user.
         if segue.identifier == "showEntry" {
