@@ -187,40 +187,28 @@ class LibraryTableViewController: UITableViewController, EntryDelegate {
         }
     }
     
-    // Inserts new entry to correct project in projects array
-    func addEntry(controller: ProjectTableViewController, didAddEntry: Entry, toProject: String) {
-        for project in self.projects {
-            if let p = (project as? Project) {
-                if toProject == p.projectTitle {
-                    p.projectEntries.insert(didAddEntry, atIndex: 0)
-                }
-            }
-        }
-    }
-    
-    // Removes correct entry at correct project in projects array
-    func removeEntry(controller: ProjectTableViewController, didRemoveEntry: String, atProject: String) {
-        for project in self.projects {
-            if let p = (project as? Project) {
-                if atProject == p.projectTitle {
-                    for var i = 0; i < p.projectEntries.count; i++ {
-                        if didRemoveEntry == p.projectEntries[i].entryTitle {
-                            p.projectEntries.removeAtIndex(i)
-                        }
-                    }
-                }
-            }
-        }
-    }
     
     // Updates correct entry to correct project in projects array
-    func updateEntry(controller: ProjectTableViewController, didUpdateEntry: Entry, atProject: String) {
+    func updateEntry(controller: ProjectTableViewController, newEntry: Entry, atProject: String, type: Int) {
         for project in self.projects {
             if let p = (project as? Project) {
                 if atProject == p.projectTitle {
-                    for var i = 0; i < p.projectEntries.count; i++ {
-                        if didUpdateEntry.entryTitle == p.projectEntries[i].entryTitle {
-                            p.projectEntries[i] = didUpdateEntry
+                    switch type {
+                    case 2: //Update Entry
+                        for var i = 0; i < p.projectEntries.count; i++ {
+                            if newEntry.entryTitle == p.projectEntries[i].entryTitle {
+                                p.projectEntries[i] = newEntry
+                            }
+                        }
+                    case 1: //Remove Entry
+                        for var i = 0; i < p.projectEntries.count; i++ {
+                            if newEntry.entryTitle == p.projectEntries[i].entryTitle {
+                                p.projectEntries.removeAtIndex(i)
+                            }
+                        }
+                    default://Add Entry
+                        if atProject == p.projectTitle {
+                            p.projectEntries.insert(newEntry, atIndex: 0)
                         }
                     }
                 }
