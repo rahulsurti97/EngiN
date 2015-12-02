@@ -12,21 +12,14 @@ class LibraryTableViewController: UITableViewController, EntryDelegate {
     
     var projects = [AnyObject]()
     
-    //weak var delegate: ProjectSelectionDelegate?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "Library"
         self.clearsSelectionOnViewWillAppear = true
-        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "promptForTitle")
-        self.navigationItem.rightBarButtonItem = addButton
-        //tableView.registerNib(UINib(nibName: "DateTableViewCell", bundle: nil), forCellReuseIdentifier: "DateCell")
-        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "DateCell")
+        //self.tableView = UITableView(frame: self.tableView.frame, style: .Grouped)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "promptForTitle")
         self.navigationController?.toolbarHidden = false
-        //self.navigationController?.setToolbarItems([addButton], animated: true)
-        //let settingsButton = UIBarButtonItem(barButtonSystemItem: .Save, target: self, action: "")
-        
-        
+        self.setToolbarItems([self.editButtonItem()], animated: true)
+        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "DateCell")
     }
     
     override func didReceiveMemoryWarning() {
@@ -106,7 +99,6 @@ class LibraryTableViewController: UITableViewController, EntryDelegate {
         projects.insert(project, atIndex: 0)
         let indexPath = NSIndexPath(forRow: 0, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-        //NSUserDefaults.standardUserDefaults().setValue(projects, forKey: "library")
     }
     
     // MARK: - Table view data source
@@ -156,7 +148,6 @@ class LibraryTableViewController: UITableViewController, EntryDelegate {
             alert.addAction(UIAlertAction(title: "Delete", style: .Default, handler: { (action) -> Void in
                 self.projects.removeAtIndex(indexPath.row)
                 tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-                //NSUserDefaults.standardUserDefaults().setValue(self.projects, forKey: "library")
             }))
             
             // Present the alert.

@@ -38,8 +38,10 @@ class ProjectTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.clearsSelectionOnViewWillAppear = true
-        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "promptForTitle")
-        self.navigationItem.rightBarButtonItem = addButton
+        //self.tableView = UITableView(frame: self.tableView.frame, style: .Grouped)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "promptForTitle")
+        //self.setToolbarItems([self.editButtonItem()], animated: true)
+        self.toolbarItems?.insert(self.editButtonItem(), atIndex: 0)
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "DateCell")
         self.configureView()
     }
@@ -137,7 +139,7 @@ class ProjectTableViewController: UITableViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return entries.count
     }
