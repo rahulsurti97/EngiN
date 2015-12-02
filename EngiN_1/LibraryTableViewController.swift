@@ -15,7 +15,6 @@ class LibraryTableViewController: UITableViewController, EntryDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.clearsSelectionOnViewWillAppear = true
-        //self.tableView = UITableView(frame: self.tableView.frame, style: .Grouped)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "promptForTitle")
         self.navigationController?.toolbarHidden = false
         self.setToolbarItems([self.editButtonItem()], animated: true)
@@ -66,12 +65,12 @@ class LibraryTableViewController: UITableViewController, EntryDelegate {
                 return true
             }()
             
-            // Switch for Bool titleIsOK, insert object if true, prompt again if false.
-            switch titleIsOK {
-            case true:
+            // Insert object if true, prompt again if false.
+            if titleIsOK {
                 self.firstAttempt = true
                 self.insertNewProject(myProjectTitle)
-            case false:
+            }
+            else {
                 self.firstAttempt = false
                 self.promptForTitle()
             }
@@ -125,7 +124,7 @@ class LibraryTableViewController: UITableViewController, EntryDelegate {
     
     // Segues to ProjectTableViewController when user selects row
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        performSegueWithIdentifier("showProject", sender: UITableViewCell.self)
+        performSegueWithIdentifier("showProjectMenu", sender: UITableViewCell.self)
     }
     
     // Allows user to delete projects
@@ -162,56 +161,43 @@ class LibraryTableViewController: UITableViewController, EntryDelegate {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Sets ProjectTableViewController to show the specific project selected by the user
-        if segue.identifier == "showProject" {
+        if segue.identifier == "showProjectMenu" {
             if let indexPath = self.tableView.indexPathForSelectedRow {
                 // Gets project from project array
                 let project = projects[indexPath.row] as! Project
                 
                 // Gets ProjectTableViewController and sets properties
-                let controller = segue.destinationViewController as? ProjectTableViewController
-                if let c = controller {
+                let controller = segue.destinationViewController as? ProjectMenuTableViewController
+                /*if let c = controller {
                     c.delegate = self
-                }
-                controller!.projectItem = project
-                controller!.navigationItem.title = project.projectTitle
-            }
-        }
-    }
-    
-    // Inserts new entry to correct project in projects array
-    func addEntry(controller: ProjectTableViewController, didAddEntry: Entry, toProject: String) {
-        for project in self.projects {
-            if let p = (project as? Project) {
-                if toProject == p.projectTitle {
-                    p.projectEntries.insert(didAddEntry, atIndex: 0)
-                }
-            }
-        }
-    }
-    
-    // Removes correct entry at correct project in projects array
-    func removeEntry(controller: ProjectTableViewController, didRemoveEntry: String, atProject: String) {
-        for project in self.projects {
-            if let p = (project as? Project) {
-                if atProject == p.projectTitle {
-                    for var i = 0; i < p.projectEntries.count; i++ {
-                        if didRemoveEntry == p.projectEntries[i].entryTitle {
-                            p.projectEntries.removeAtIndex(i)
-                        }
-                    }
-                }
+                }*/
+                controller!.project = project
+                controller!.navigationItem.title = " \(project.projectTitle) Menu"
             }
         }
     }
     
     // Updates correct entry to correct project in projects array
-    func updateEntry(controller: ProjectTableViewController, didUpdateEntry: Entry, atProject: String) {
+    func updateEntry(controller: ProjectTableViewController, newEntry: Entry, atProject: String, type: Int) {
         for project in self.projects {
             if let p = (project as? Project) {
                 if atProject == p.projectTitle {
-                    for var i = 0; i < p.projectEntries.count; i++ {
-                        if didUpdateEntry.entryTitle == p.projectEntries[i].entryTitle {
-                            p.projectEntries[i] = didUpdateEntry
+                    switch type {
+                    case 2: //Update Entry
+                        for var i = 0; i < p.projectEntries.count; i++ {
+                            if newEntry.entryTitle == p.projectEntries[i].entryTitle {
+                                p.projectEntries.removeAtIndex(i)
+                            }
+                        }
+                    case 1: //Remove Entry
+                        for var i = 0; i < p.projectEntries.count; i++ {
+                            if newEntry.entryTitle == p.projectEntries[i].entryTitle {
+                                p.projectEntries[i] = entry
+                            }
+                        }
+                    default://Add Entry
+                        if atProject == p.projectTitle {
+                            p.projectEntries.insert(newEntry, atIndex: 0)
                         }
                     }
                 }

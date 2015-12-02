@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0C0906D11C04FCD6004C1E22 /* DateTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0906CF1C04FCD6004C1E22 /* DateTableCell.swift */; };
+		0C26CB941C0F540300BEE881 /* ProjectMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C26CB931C0F540300BEE881 /* ProjectMenuTableViewController.swift */; };
 		0C6855D71C04FBB300DF4D2D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6855D61C04FBB300DF4D2D /* AppDelegate.swift */; };
 		0C6855DC1C04FBB300DF4D2D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C6855DA1C04FBB300DF4D2D /* Main.storyboard */; };
 		0C6855DE1C04FBB300DF4D2D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C6855DD1C04FBB300DF4D2D /* Assets.xcassets */; };
@@ -21,6 +22,7 @@
 
 /* Begin PBXFileReference section */
 		0C0906CF1C04FCD6004C1E22 /* DateTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateTableCell.swift; sourceTree = "<group>"; };
+		0C26CB931C0F540300BEE881 /* ProjectMenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectMenuTableViewController.swift; sourceTree = "<group>"; };
 		0C6855D31C04FBB300DF4D2D /* EngiN_1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EngiN_1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C6855D61C04FBB300DF4D2D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0C6855DB1C04FBB300DF4D2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 			children = (
 				0C6855D61C04FBB300DF4D2D /* AppDelegate.swift */,
 				0C6855E81C04FBFD00DF4D2D /* LibraryTableViewController.swift */,
+				0C26CB931C0F540300BEE881 /* ProjectMenuTableViewController.swift */,
 				0C6855EA1C04FC0700DF4D2D /* ProjectTableViewController.swift */,
 				0C6855EC1C04FC1F00DF4D2D /* EntryViewController.swift */,
 				0C6855F01C04FC3500DF4D2D /* Project.swift */,
@@ -158,6 +161,7 @@
 				0C0906D11C04FCD6004C1E22 /* DateTableCell.swift in Sources */,
 				0C6855D71C04FBB300DF4D2D /* AppDelegate.swift in Sources */,
 				0C6855F11C04FC3500DF4D2D /* Project.swift in Sources */,
+				0C26CB941C0F540300BEE881 /* ProjectMenuTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

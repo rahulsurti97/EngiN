@@ -9,9 +9,8 @@
 import UIKit
 
 protocol EntryDelegate {
-    func addEntry(controller: ProjectTableViewController, didAddEntry: Entry, toProject: String)
-    func removeEntry(controller: ProjectTableViewController, didRemoveEntry: String, atProject: String)
-    func updateEntry(controller: ProjectTableViewController, didUpdateEntry: Entry, atProject: String)
+    func updateEntry(controller: ProjectTableViewController, newEntry: Entry, atProject: String, type: Int)
+    func getEntries(controller: ProjectTableViewController, atProject: String) -> [Entry]
 }
 
 class ProjectTableViewController: UITableViewController {
@@ -40,8 +39,8 @@ class ProjectTableViewController: UITableViewController {
         self.clearsSelectionOnViewWillAppear = true
         //self.tableView = UITableView(frame: self.tableView.frame, style: .Grouped)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "promptForTitle")
-        //self.setToolbarItems([self.editButtonItem()], animated: true)
-        self.toolbarItems?.insert(self.editButtonItem(), atIndex: 0)
+        self.setToolbarItems([self.editButtonItem()], animated: true)
+        //self.toolbarItems?.insert(self.editButtonItem(), atIndex: 0)
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "DateCell")
         self.configureView()
     }
@@ -56,22 +55,14 @@ class ProjectTableViewController: UITableViewController {
         // Create the alert controller.
         let alert: UIAlertController
         
-        switch firstAttempt {
-        case true:
-            alert = UIAlertController(title: "Enter A Title", message: "", preferredStyle: .Alert)
-        case false:
-            alert = UIAlertController(title: "Please enter a different title", message: "This title is already used.", preferredStyle: .Alert)
-        }
+        if firstAttempt { alert = UIAlertController(title: "Enter A Title", message: "", preferredStyle: .Alert) }
+        else            { alert = UIAlertController(title: "Please enter a different title", message: "This title is already used.", preferredStyle: .Alert) }
         
         // Add the text field.
-        alert.addTextFieldWithConfigurationHandler({ (textField) -> Void in
-            textField.text = ""
-        })
+        alert.addTextFieldWithConfigurationHandler({ (textField) -> Void in textField.text = "" })
         
         // Do not remove project if user hits "Cancel"
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action) -> Void in
-            // Do nothing
-        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action) -> Void in /*Do nothing*/ }))
         
         // Grab the value from the text field, and create project with title when the user hits "Create".
         alert.addAction(UIAlertAction(title: "Create", style: .Default, handler: { (action) -> Void in
@@ -91,11 +82,11 @@ class ProjectTableViewController: UITableViewController {
             }()
             
             // Switch for Bool titleIsOK, insert object if true, prompt again if false.
-            switch titleIsOK {
-            case true:
+            if titleIsOK {
                 self.firstAttempt = true
                 self.insertNewEntry(myEntryTitle)
-            case false:
+            }
+            else {
                 self.firstAttempt = false
                 self.promptForTitle()
             }
@@ -129,7 +120,7 @@ class ProjectTableViewController: UITableViewController {
         // Inserts the entry into the project at the scope of the library.
         if let delegate = self.delegate {
             if let project = self.projectItem {
-                delegate.addEntry(self, didAddEntry: myEntry, toProject: project.projectTitle)
+                delegate.updateEntry(self, newEntry: myEntry, atProject: project.projectTitle, type: 0)
             }
         }
     }
@@ -147,6 +138,8 @@ class ProjectTableViewController: UITableViewController {
     // Instantiates cells to show all entries in the project.
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "DateCell")
+        
+        
         let entry = entries[indexPath.row] as! Entry
         cell.textLabel?.text = entry.entryTitle
         cell.detailTextLabel?.text = entry.entryDate
@@ -180,8 +173,7 @@ class ProjectTableViewController: UITableViewController {
                 if let delegate = self.delegate {
                     if let project = self.projectItem {
                         let entry = self.entries[indexPath.row] as! Entry
-                        delegate.removeEntry(self, didRemoveEntry: entry.entryTitle, atProject: project.projectTitle)
-                    }
+                        delegate.updateEntry(self, newEntry: entry, atProject: project.projectTitle, type: 1)                    }
                 }
                 self.entries.removeAtIndex(indexPath.row)
                 tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
