@@ -20,8 +20,8 @@ class LibraryTableViewController: UITableViewController, EntryDelegate {
         self.clearsSelectionOnViewWillAppear = true
         let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "promptForTitle")
         self.navigationItem.rightBarButtonItem = addButton
-        tableView.registerNib(UINib(nibName: "DateTableViewCell", bundle: nil), forCellReuseIdentifier: "DateCell")
-        
+        //tableView.registerNib(UINib(nibName: "DateTableViewCell", bundle: nil), forCellReuseIdentifier: "DateCell")
+        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "DateCell")
         self.navigationController?.toolbarHidden = false
         //self.navigationController?.setToolbarItems([addButton], animated: true)
         //let settingsButton = UIBarButtonItem(barButtonSystemItem: .Save, target: self, action: "")
@@ -121,13 +121,13 @@ class LibraryTableViewController: UITableViewController, EntryDelegate {
     
     // Instantiates cells to show all projects in the project array
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("DateCell", forIndexPath: indexPath) as! DateTableCell
-        
-        //let library = NSUserDefaults.standardUserDefaults().objectForKey("library") as! NSArray
+        let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "DateCell")
         
         let project = projects[indexPath.row] as! Project
-        cell.titleLabel!.text = project.projectTitle
-        cell.dateLabel!.text = project.projectDate
+        cell.textLabel?.text = project.projectTitle
+        cell.detailTextLabel?.text = project.projectDate
+        cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+
         return cell
     }
     

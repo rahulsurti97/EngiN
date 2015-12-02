@@ -27,8 +27,6 @@ class ProjectTableViewController: UITableViewController {
         }
     }
     
-    
-    
     func configureView() {
         // Update the user interface for the project item.
         if let project = self.projectItem {
@@ -42,7 +40,7 @@ class ProjectTableViewController: UITableViewController {
         self.clearsSelectionOnViewWillAppear = true
         let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "promptForTitle")
         self.navigationItem.rightBarButtonItem = addButton
-        tableView.registerNib(UINib(nibName: "DateTableViewCell", bundle: nil), forCellReuseIdentifier: "DateCell")
+        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "DateCell")
         self.configureView()
     }
 
@@ -68,6 +66,10 @@ class ProjectTableViewController: UITableViewController {
             textField.text = ""
         })
         
+        // Do not remove project if user hits "Cancel"
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action) -> Void in
+            // Do nothing
+        }))
         
         // Grab the value from the text field, and create project with title when the user hits "Create".
         alert.addAction(UIAlertAction(title: "Create", style: .Default, handler: { (action) -> Void in
@@ -142,11 +144,11 @@ class ProjectTableViewController: UITableViewController {
 
     // Instantiates cells to show all entries in the project.
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("DateCell", forIndexPath: indexPath) as! DateTableCell
-        
+        let cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "DateCell")
         let entry = entries[indexPath.row] as! Entry
-        cell.titleLabel!.text = entry.entryTitle
-        cell.dateLabel!.text = entry.entryDate
+        cell.textLabel?.text = entry.entryTitle
+        cell.detailTextLabel?.text = entry.entryDate
+        cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         return cell
     }
 
@@ -172,13 +174,14 @@ class ProjectTableViewController: UITableViewController {
             
             // Delete entry if user hits "Delete".
             alert.addAction(UIAlertAction(title: "Delete", style: .Default, handler: { (action) -> Void in
-                self.entries.removeAtIndex(indexPath.row)
                 // Removes the entry of the project at the scope of the library.
                 if let delegate = self.delegate {
                     if let project = self.projectItem {
-                        delegate.removeEntry(self, didRemoveEntry: self.entries[indexPath.row] as! String, atProject: project.projectTitle)
+                        let entry = self.entries[indexPath.row] as! Entry
+                        delegate.removeEntry(self, didRemoveEntry: entry.entryTitle, atProject: project.projectTitle)
                     }
                 }
+                self.entries.removeAtIndex(indexPath.row)
                 tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
             }))
             
