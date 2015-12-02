@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0C0906D11C04FCD6004C1E22 /* DateTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0906CF1C04FCD6004C1E22 /* DateTableCell.swift */; };
 		0C0906D21C04FCD6004C1E22 /* DateTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C0906D01C04FCD6004C1E22 /* DateTableViewCell.xib */; };
+		0C26CB661C0E79D300BEE881 /* Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C26CB651C0E79D300BEE881 /* Settings.png */; };
 		0C6855D71C04FBB300DF4D2D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6855D61C04FBB300DF4D2D /* AppDelegate.swift */; };
 		0C6855DC1C04FBB300DF4D2D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C6855DA1C04FBB300DF4D2D /* Main.storyboard */; };
 		0C6855DE1C04FBB300DF4D2D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C6855DD1C04FBB300DF4D2D /* Assets.xcassets */; };
@@ -23,6 +24,7 @@
 /* Begin PBXFileReference section */
 		0C0906CF1C04FCD6004C1E22 /* DateTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateTableCell.swift; sourceTree = "<group>"; };
 		0C0906D01C04FCD6004C1E22 /* DateTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DateTableViewCell.xib; sourceTree = "<group>"; };
+		0C26CB651C0E79D300BEE881 /* Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Settings.png; sourceTree = "<group>"; };
 		0C6855D31C04FBB300DF4D2D /* EngiN_1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EngiN_1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C6855D61C04FBB300DF4D2D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0C6855DB1C04FBB300DF4D2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 				0C0906CF1C04FCD6004C1E22 /* DateTableCell.swift */,
 				0C0906D01C04FCD6004C1E22 /* DateTableViewCell.xib */,
 				0C6855DA1C04FBB300DF4D2D /* Main.storyboard */,
+				0C26CB651C0E79D300BEE881 /* Settings.png */,
 				0C6855DD1C04FBB300DF4D2D /* Assets.xcassets */,
 				0C6855DF1C04FBB300DF4D2D /* LaunchScreen.storyboard */,
 				0C6855E21C04FBB300DF4D2D /* Info.plist */,
@@ -141,6 +144,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C26CB661C0E79D300BEE881 /* Settings.png in Resources */,
 				0C6855E11C04FBB300DF4D2D /* LaunchScreen.storyboard in Resources */,
 				0C6855DE1C04FBB300DF4D2D /* Assets.xcassets in Resources */,
 				0C6855DC1C04FBB300DF4D2D /* Main.storyboard in Resources */,

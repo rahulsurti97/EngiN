@@ -21,6 +21,12 @@ class LibraryTableViewController: UITableViewController, EntryDelegate {
         let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "promptForTitle")
         self.navigationItem.rightBarButtonItem = addButton
         tableView.registerNib(UINib(nibName: "DateTableViewCell", bundle: nil), forCellReuseIdentifier: "DateCell")
+        
+        self.navigationController?.toolbarHidden = false
+        //self.navigationController?.setToolbarItems([addButton], animated: true)
+        //let settingsButton = UIBarButtonItem(barButtonSystemItem: .Save, target: self, action: "")
+        
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -45,6 +51,11 @@ class LibraryTableViewController: UITableViewController, EntryDelegate {
             textField.text = ""
         })
 
+        // Do not remove project if user hits "Cancel"
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action) -> Void in
+            // Do nothing
+        }))
+        
         // Grab the value from the text field, and create project with title when the user hits "Create".
         alert.addAction(UIAlertAction(title: "Create", style: .Default, handler: { (action) -> Void in
             let textField = alert.textFields![0] as UITextField

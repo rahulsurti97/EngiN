@@ -68,6 +68,7 @@ class ProjectTableViewController: UITableViewController {
             textField.text = ""
         })
         
+        
         // Grab the value from the text field, and create project with title when the user hits "Create".
         alert.addAction(UIAlertAction(title: "Create", style: .Default, handler: { (action) -> Void in
             let textField = alert.textFields![0] as UITextField

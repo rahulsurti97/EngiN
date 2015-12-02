@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
     </dependencies>
     <scenes>
-        <!--Root View Controller-->
+        <!--Library-->
         <scene sceneID="Bnk-ZS-cwf">
             <objects>
                 <tableViewController id="PWN-Pg-1f1" customClass="LibraryTableViewController" customModule="EngiN_1" customModuleProvider="target" sceneMemberID="viewController">
@@ -35,7 +35,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="9Tn-xd-Hzj"/>
+                    <navigationItem key="navigationItem" title="Library" id="9Tn-xd-Hzj"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </tableViewController>
@@ -43,7 +43,7 @@
             </objects>
             <point key="canvasLocation" x="256.5" y="742.5"/>
         </scene>
-        <!--Project Table View Controller-->
+        <!--Project-->
         <scene sceneID="edf-E1-8H2">
             <objects>
                 <tableViewController id="W6C-Vd-eAT" customClass="ProjectTableViewController" customModule="EngiN_1" customModuleProvider="target" sceneMemberID="viewController">
@@ -72,13 +72,14 @@
                             <outlet property="delegate" destination="W6C-Vd-eAT" id="ksc-ph-i1B"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="SFT-IE-yk6"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Project" id="SFT-IE-yk6"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IDi-mF-5hW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="800.5" y="742.5"/>
         </scene>
-        <!--Entry View Controller-->
+        <!--Entry-->
         <scene sceneID="F3e-29-yQb">
             <objects>
                 <viewController id="zuM-aV-EfP" customClass="EntryViewController" customModule="EngiN_1" customModuleProvider="target" sceneMemberID="viewController">
@@ -105,7 +106,7 @@
                             <constraint firstItem="b1s-Oe-uZa" firstAttribute="centerX" secondItem="HZN-5e-lzD" secondAttribute="centerX" id="fPX-QZ-o4H"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="wHo-hJ-ODV"/>
+                    <navigationItem key="navigationItem" title="Entry" id="wHo-hJ-ODV"/>
                     <connections>
                         <outlet property="detailDescriptionLabel" destination="b1s-Oe-uZa" id="DL7-Ed-s1C"/>
                     </connections>
