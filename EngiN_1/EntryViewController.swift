@@ -13,10 +13,8 @@ class EntryViewController: UIViewController {
     @IBOutlet weak var detailDescriptionLabel: UILabel!
     
     var detailItem: Entry? {
-        didSet {
-            // Update the view.
-            self.configureView()
-        }
+        // Update View if set.
+        didSet { self.configureView() }
     }
     
     func configureView() {
@@ -30,7 +28,6 @@ class EntryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         self.configureView()
     }
     
@@ -38,6 +35,4 @@ class EntryViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
 }
