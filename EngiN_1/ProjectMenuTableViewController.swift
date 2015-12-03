@@ -9,11 +9,12 @@
 import UIKit
 
 
-class ProjectMenuTableViewController: UITableViewController, EntryDelegate {
+class ProjectMenuTableViewController: UITableViewController, EntryDelegate, TeamMemberDelegate {
 
     var project: Project?
     
     var delegate: EntryDelegate?
+    var memberDelegate: TeamMemberDelegate?
     
     @IBOutlet weak var entryCount: UILabel!
     @IBOutlet weak var recentEntryDate: UILabel!
@@ -63,6 +64,7 @@ class ProjectMenuTableViewController: UITableViewController, EntryDelegate {
         }
         if segue.identifier == "showTeamMembers" {
             if let c = segue.destinationViewController as? TeamMemberTableViewController {
+                c.delegate = self
                 c.members = (project?.projectMembers)!
                 c.navigationItem.title = project!.projectTitle
             }
@@ -75,5 +77,11 @@ class ProjectMenuTableViewController: UITableViewController, EntryDelegate {
         project = delegate?.updateEntry(controller, newEntry: newEntry, atProject: atProject, type: type)
         configureView()
         return project!
+    }
+    
+    func updateTeamMembers(controller: TeamMemberTableViewController, teamMembers: [Member], atProject: String) -> [Member] {
+        project?.projectMembers = (memberDelegate?.updateTeamMembers(controller, teamMembers: teamMembers, atProject: atProject))!
+        configureView()
+        return (project?.projectMembers)!
     }
 }

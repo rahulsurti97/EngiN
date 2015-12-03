@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LibraryTableViewController: UITableViewController, EntryDelegate {
+class LibraryTableViewController: UITableViewController, EntryDelegate, TeamMemberDelegate {
     
     var projects = [AnyObject]()
     
@@ -79,8 +79,14 @@ class LibraryTableViewController: UITableViewController, EntryDelegate {
     
     func insertNewProject(myProjectTitle: String) {
         // Creates new project; if first opening app, create a sample project.
-        let project = Project(title: myProjectTitle, date: currentDate(), entries: [], members: [("Rahul", "Captain"), ("Kevin", "Manager"), ("Kanyon", "Programmer")])
-        if first { project.projectEntries = [Entry(title: "First Entry", date: currentDate(), text: "This is our project!")]}
+        var myEntries: [Entry] = []
+        var myMembers: [Member] = []
+        if first {
+            myEntries = [Entry(title: "First Entry", date: currentDate(), text: "This is our project!")]
+            
+            myMembers = [Member(name: "Rahul", role: "Captain", bio: ""), Member(name: "Kevin", role: "Manager", bio: ""), Member(name: "Kanyon", role: "Programmer",bio: "")]
+        }
+        let project = Project(title: myProjectTitle, date: currentDate(), entries: myEntries, members: myMembers)
         
         // Inserts project in the projects array.
         projects.insert(project, atIndex: 0)
@@ -167,6 +173,7 @@ class LibraryTableViewController: UITableViewController, EntryDelegate {
                 // Sets delegate, project, and title of Project Menu.
                 if let c = (segue.destinationViewController as? ProjectMenuTableViewController) {
                     c.delegate = self
+                    c.memberDelegate = self
                     c.project = (projects[indexPath.row] as! Project)
                     c.navigationItem.title = "Home"
                 }
@@ -201,5 +208,19 @@ class LibraryTableViewController: UITableViewController, EntryDelegate {
             }
         }
         return projectToReturn
+    }
+    
+    func updateTeamMembers(controller: TeamMemberTableViewController, teamMembers: [Member], atProject: String) -> [Member] {
+        var membersToReturn: [Member] = []
+        // Find correct project to modify
+        for project in self.projects {
+            if let p = (project as? Project) {
+                if atProject == p.projectTitle {
+                    p.projectMembers = teamMembers
+                    membersToReturn = teamMembers
+                }
+            }
+        }
+        return membersToReturn
     }
 }

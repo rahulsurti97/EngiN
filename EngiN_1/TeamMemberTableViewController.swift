@@ -7,11 +7,14 @@
 //
 
 import UIKit
-
+protocol TeamMemberDelegate {
+    func updateTeamMembers(controller: TeamMemberTableViewController, teamMembers: [Member], atProject: String) -> [Member]
+}
 class TeamMemberTableViewController: UITableViewController {
 
-    var members = [(String, String)]()
+    var members = [Member]()
     
+    var delegate: TeamMemberDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,8 +55,8 @@ class TeamMemberTableViewController: UITableViewController {
             
             // Determines if name is valid, ie. not previously used.
             let nameIsOK: Bool = {() -> Bool in
-                for (member,_) in self.members {
-                    if member == memberName {
+                for m in self.members {
+                    if m.memberName == memberName {
                         return false
                     }
                 }
@@ -73,16 +76,14 @@ class TeamMemberTableViewController: UITableViewController {
     
     func insertNewMember(memberName: String, role: String) {
         // Inserts member in the members array.
-        members.append((memberName, role))
+        members.append(Member(name: memberName, role: role, bio: ""))
         let indexPath = NSIndexPath(forRow: members.count - 1, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
         
         // Inserts the entry into the project at the scope of the library.
-        /*if let delegate = self.delegate {
-            if let project = self.projectItem {
-                delegate.updateEntry(self, newEntry: myEntry, atProject: project, type: 0)
-            }
-        }*/
+        if let delegate = self.delegate {
+            delegate.updateTeamMembers(self, teamMembers: members, atProject: self.navigationItem.title!)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -102,8 +103,9 @@ class TeamMemberTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("TeamMember", forIndexPath: indexPath)
-        cell.textLabel?.text = members[indexPath.row].0
-        cell.detailTextLabel?.text = members[indexPath.row].1
+        cell.textLabel?.text = members[indexPath.row].memberName
+        cell.detailTextLabel?.text = members[indexPath.row].memberRole
+        cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         return cell
     }
 
