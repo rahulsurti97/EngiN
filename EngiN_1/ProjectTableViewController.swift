@@ -174,9 +174,7 @@ class ProjectTableViewController: UITableViewController {
             
             // Present the alert.
             self.presentViewController(alert, animated: true, completion: nil)
-        } else if editingStyle == .Insert {
-            // Create a new instance of entry, insert it into the array, and add a new row to the table view.
-        }
+        } else if editingStyle == .Insert { /* Managed elsewhere */ }
     }
 
     // Sets title of section.

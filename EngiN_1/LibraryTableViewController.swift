@@ -25,7 +25,7 @@ class LibraryTableViewController: UITableViewController, EntryDelegate {
         self.setToolbarItems([self.editButtonItem()], animated: true)
         
         // Upon first opening app, creates a sample project.
-        insertNewProject("Sample Project")
+        insertNewProject("EngiN")
         first = false
     }
     
@@ -79,8 +79,8 @@ class LibraryTableViewController: UITableViewController, EntryDelegate {
     
     func insertNewProject(myProjectTitle: String) {
         // Creates new project; if first opening app, create a sample project.
-        let project = Project(title: myProjectTitle, date: currentDate(), entries: [])
-        if first { project.projectEntries = [Entry(title: "Sample Entry", date: currentDate(), text: "Sample Text")] }
+        let project = Project(title: myProjectTitle, date: currentDate(), entries: [], members: [("Rahul", "Captain"), ("Kevin", "Manager"), ("Kanyon", "Programmer")])
+        if first { project.projectEntries = [Entry(title: "First Entry", date: currentDate(), text: "This is our project!")]}
         
         // Inserts project in the projects array.
         projects.insert(project, atIndex: 0)

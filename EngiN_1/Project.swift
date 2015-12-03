@@ -13,15 +13,18 @@ class Project {
     var projectTitle: String
     var projectDate: String
     var projectEntries: [Entry]
+    var projectMembers: [(String, String)]
     
-    init(title: String, date: String, entries: [Entry]) {
+    init(title: String, date: String, entries: [Entry], members: [(String, String)]) {
         projectTitle = title
         projectDate = date
         projectEntries = entries
+        projectMembers = members
     }
     init() {
         projectTitle = ""
         projectDate = ""
         projectEntries = []
+        projectMembers = []
     }
 }

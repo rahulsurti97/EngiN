@@ -17,6 +17,7 @@ class ProjectMenuTableViewController: UITableViewController, EntryDelegate {
     
     @IBOutlet weak var entryCount: UILabel!
     @IBOutlet weak var recentEntryDate: UILabel!
+    @IBOutlet weak var numberOfTeamMembers: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +31,7 @@ class ProjectMenuTableViewController: UITableViewController, EntryDelegate {
             if count == 1 { entryCount.text = "\(count) Entry" }
             else          { entryCount.text = "\(count) Entries" }
             recentEntryDate.text = p.projectEntries.first?.entryDate
+            numberOfTeamMembers.text = "\(p.projectMembers.count) Members"
         }
     }
     
@@ -56,6 +58,12 @@ class ProjectMenuTableViewController: UITableViewController, EntryDelegate {
             if let c = (segue.destinationViewController as? ProjectTableViewController) {
                 c.delegate = self
                 c.projectItem = project
+                c.navigationItem.title = project!.projectTitle
+            }
+        }
+        if segue.identifier == "showTeamMembers" {
+            if let c = segue.destinationViewController as? TeamMemberTableViewController {
+                c.members = (project?.projectMembers)!
                 c.navigationItem.title = project!.projectTitle
             }
         }
