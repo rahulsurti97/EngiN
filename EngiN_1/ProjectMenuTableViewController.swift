@@ -74,6 +74,12 @@ class ProjectMenuTableViewController: UITableViewController, EntryDelegate, Team
                 c.navigationItem.title = project!.projectTitle
             }
         }
+        /*if segue.identifier == "showProjectDescription" {
+            if let c = segue.destinationViewController as? ProjectDescriptionViewController {
+
+            }
+        }*/
+        
     }
     
     // Calls delegate in library method to update entries at scope of Library.

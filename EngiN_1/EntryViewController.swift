@@ -8,9 +8,14 @@
 
 import UIKit
 
+protocol EntryChangedDelegate {
+    func updateEntryText(controller: EntryViewController, entry: Entry) -> Entry
+}
 class EntryViewController: UIViewController {
     
-    @IBOutlet weak var detailDescriptionLabel: UILabel!
+    @IBOutlet weak var detailDescriptionLabel: UITextView!
+    
+    var entryDelegate: EntryChangedDelegate?
     
     var entryItem: Entry? {
         // Update View if set.
@@ -29,6 +34,11 @@ class EntryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureView()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        entryItem?.entryText = detailDescriptionLabel.text
+        entryDelegate?.updateEntryText(self, entry: entryItem!)
     }
     
     override func didReceiveMemoryWarning() {

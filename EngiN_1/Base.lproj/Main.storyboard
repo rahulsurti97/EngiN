@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Library-->
@@ -147,7 +146,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Project Desciption" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zdg-Iq-7zB">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Project Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zdg-Iq-7zB">
                                                     <rect key="frame" x="15" y="0.0" width="325" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <animations/>
@@ -159,6 +158,9 @@
                                             <animations/>
                                         </tableViewCellContentView>
                                         <animations/>
+                                        <connections>
+                                            <segue destination="mJG-IR-PbJ" kind="push" identifier="showProjectDescription" id="jU9-UC-5Df"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -178,7 +180,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZZK-7w-xIp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="154.5" y="742.5"/>
+            <point key="canvasLocation" x="148.5" y="742.5"/>
         </scene>
         <!--Team Member Table View Controller-->
         <scene sceneID="IEC-Dx-Xi5">
@@ -230,6 +232,36 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zVz-SZ-xFM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="746.5" y="742.5"/>
+        </scene>
+        <!--Project Description-->
+        <scene sceneID="oKe-8O-1RB">
+            <objects>
+                <viewController title="Project Description" id="mJG-IR-PbJ" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="QtL-R1-F23"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ncy-zW-DL5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="t1d-A8-d4C">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="eWI-QX-MGx">
+                                <rect key="frame" x="0.0" y="64" width="375" height="559"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Project Description" id="9po-Gb-bET"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Wsg-6z-02c" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="765.5" y="1600.5"/>
         </scene>
         <!--Project-->
         <scene sceneID="edf-E1-8H2">
@@ -299,27 +331,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LAA-7q-35z">
-                                <rect key="frame" x="73" y="308" width="228" height="52"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="SjD-cK-PTB">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="LAA-7q-35z" firstAttribute="centerX" secondItem="sbX-y9-dV6" secondAttribute="centerX" id="Mya-q4-mJF"/>
-                            <constraint firstItem="LAA-7q-35z" firstAttribute="centerY" secondItem="sbX-y9-dV6" secondAttribute="centerY" id="PgA-iJ-2cn"/>
-                            <constraint firstItem="LAA-7q-35z" firstAttribute="top" secondItem="nGR-De-pxW" secondAttribute="bottom" constant="244" id="ubr-e0-ykb"/>
-                            <constraint firstItem="LAA-7q-35z" firstAttribute="leading" secondItem="sbX-y9-dV6" secondAttribute="leadingMargin" constant="57" id="zus-JX-tyd"/>
+                            <constraint firstItem="SjD-cK-PTB" firstAttribute="top" secondItem="nGR-De-pxW" secondAttribute="bottom" id="X4n-eh-g3H"/>
+                            <constraint firstItem="SjD-cK-PTB" firstAttribute="bottom" secondItem="olG-Yj-yVG" secondAttribute="top" id="bBA-KZ-FXv"/>
+                            <constraint firstAttribute="trailing" secondItem="SjD-cK-PTB" secondAttribute="trailing" id="dSt-K8-bOl"/>
+                            <constraint firstItem="SjD-cK-PTB" firstAttribute="leading" secondItem="sbX-y9-dV6" secondAttribute="leading" id="i0d-gZ-gyb"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Entry" id="D0Q-jW-3zz"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <outlet property="detailDescriptionLabel" destination="LAA-7q-35z" id="caf-nP-eoe"/>
+                        <outlet property="detailDescriptionLabel" destination="SjD-cK-PTB" id="8Mt-pp-xYD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ekw-WQ-a5Y" userLabel="First Responder" sceneMemberID="firstResponder"/>

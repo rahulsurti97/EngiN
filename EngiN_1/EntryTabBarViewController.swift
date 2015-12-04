@@ -11,7 +11,7 @@ import UIKit
 protocol EntryModifiedDelegate {
     func updateEntry(controller: EntryTabBarViewController, modifiedEntry: Entry) -> Entry
 }
-class EntryTabBarViewController: UITabBarController, MemberPresentDelegate {
+class EntryTabBarViewController: UITabBarController, MemberPresentDelegate, EntryChangedDelegate{
     
     var entryItem: Entry?
     
@@ -22,6 +22,10 @@ class EntryTabBarViewController: UITabBarController, MemberPresentDelegate {
         let teamMemberVC = self.viewControllers![0] as! EntryTeamMemberTableViewController
         teamMemberVC.teamMembers = (entryItem?.membersPresent)!
         teamMemberVC.presentDelegate = self
+        
+        let entryVC = self.viewControllers![self.viewControllers!.count-1] as! EntryViewController
+        entryVC.entryItem = self.entryItem
+        entryVC.entryDelegate = self
         // Do any additional setup after loading the view.
     }
 
@@ -35,7 +39,11 @@ class EntryTabBarViewController: UITabBarController, MemberPresentDelegate {
         entryItem = entryDelegate?.updateEntry(self, modifiedEntry: entryItem!)
         return members
     }
-
+    
+    func updateEntryText(controller: EntryViewController, entry: Entry) -> Entry {
+        entryItem = entryDelegate?.updateEntry(self, modifiedEntry: entry)
+        return entry
+    }
     /*
     // MARK: - Navigation
 
