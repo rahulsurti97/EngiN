@@ -11,7 +11,7 @@ import UIKit
 protocol EntryDelegate {
     func updateEntry(controller: ProjectTableViewController, newEntry: Entry, atProject: Project, type: Int) -> Project
 }
-class ProjectTableViewController: UITableViewController {
+class ProjectTableViewController: UITableViewController, EntryModifiedDelegate {
 
     var entries = [AnyObject]()
     
@@ -42,6 +42,10 @@ class ProjectTableViewController: UITableViewController {
         
         // Update View
         self.configureView()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        self.navigationController?.setToolbarHidden(false, animated: true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -94,11 +98,12 @@ class ProjectTableViewController: UITableViewController {
     
     func insertNewEntry(myEntryTitle: String) {
         // Creates Entry object.
-        let myEntry = Entry(title: myEntryTitle, date: currentDate(), text: "Sample Text")
+        let myEntry = Entry(title: myEntryTitle, date: currentDate(), text: "Sample Text", members: (projectItem?.projectMembers)!)
         
         // Inserts entry in the entries array.
-        entries.insert(myEntry, atIndex: 0)
-        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+        entries.append(myEntry)
+        //entries.insert(myEntry, atIndex: 0)
+        let indexPath = NSIndexPath(forRow: entries.count - 1, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
 
         // Inserts the entry into the project at the scope of the library.
@@ -188,15 +193,29 @@ class ProjectTableViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Sets DetailViewController to show the specific entry selected by the user.
         if segue.identifier == "showEntry" {
+            // Disable toolbar
+            self.navigationController?.setToolbarHidden(true, animated: true)
             if let indexPath = self.tableView.indexPathForSelectedRow {
                 // Gets entry from entry array
                 let entry = entries[indexPath.row] as! Entry
                 
                 // Gets EntryViewController and sets properties
-                let controller = segue.destinationViewController as! EntryViewController
-                controller.detailItem = entry
+                let controller = segue.destinationViewController as! EntryTabBarViewController
+                controller.entryDelegate = self
+                controller.entryItem = entry
                 controller.navigationItem.title = entry.entryTitle
             }
         }
+    }
+    
+    func updateEntry(controller: EntryTabBarViewController, modifiedEntry: Entry) -> Entry {
+        let p = delegate?.updateEntry(self, newEntry: modifiedEntry, atProject: projectItem!, type: 2) as Project!
+        var entryToReturn = Entry(title: "", date: "", text: "", members: [])
+        for e in p.projectEntries {
+            if e.entryTitle == modifiedEntry.entryTitle {
+                entryToReturn = e
+            }
+        }
+        return entryToReturn
     }
 }

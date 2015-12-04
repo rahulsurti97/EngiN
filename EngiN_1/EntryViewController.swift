@@ -12,16 +12,16 @@ class EntryViewController: UIViewController {
     
     @IBOutlet weak var detailDescriptionLabel: UILabel!
     
-    var detailItem: Entry? {
+    var entryItem: Entry? {
         // Update View if set.
         didSet { self.configureView() }
     }
     
     func configureView() {
         // Update the user interface for the detail item.
-        if let detail = self.detailItem {
+        if let entry = self.entryItem {
             if let label = self.detailDescriptionLabel {
-                label.text = detail.entryText
+                label.text = entry.entryText
             }
         }
     }

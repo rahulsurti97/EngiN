@@ -20,13 +20,17 @@ class LibraryTableViewController: UITableViewController, EntryDelegate, TeamMemb
         // Creates add button in top right of navigation bar.
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "promptForTitle")
         
-        // Enables toolbar and adds edit button in bottom left.
-        self.navigationController?.toolbarHidden = false
+        // Adds edit button in bottom left.
         self.setToolbarItems([self.editButtonItem()], animated: true)
         
         // Upon first opening app, creates a sample project.
         insertNewProject("EngiN")
         first = false
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        // Enable toolbar.
+        self.navigationController?.setToolbarHidden(false, animated: true)
     }
     
     override func didReceiveMemoryWarning() {
@@ -82,15 +86,14 @@ class LibraryTableViewController: UITableViewController, EntryDelegate, TeamMemb
         var myEntries: [Entry] = []
         var myMembers: [Member] = []
         if first {
-            myEntries = [Entry(title: "First Entry", date: currentDate(), text: "This is our project!")]
-            
             myMembers = [Member(name: "Rahul", role: "Captain", bio: ""), Member(name: "Kevin", role: "Manager", bio: ""), Member(name: "Kanyon", role: "Programmer",bio: "")]
+            myEntries = [Entry(title: "First Entry", date: currentDate(), text: "This is our project!", members: myMembers)]
         }
         let project = Project(title: myProjectTitle, date: currentDate(), entries: myEntries, members: myMembers)
         
         // Inserts project in the projects array.
-        projects.insert(project, atIndex: 0)
-        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+        projects.append(project)
+        let indexPath = NSIndexPath(forRow: projects.count - 1, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
     }
     
@@ -202,7 +205,7 @@ class LibraryTableViewController: UITableViewController, EntryDelegate, TeamMemb
                             if newEntry.entryTitle == p.projectEntries[i].entryTitle { p.projectEntries.removeAtIndex(i) }
                         }
                     default://Add Entry
-                            p.projectEntries.insert(newEntry, atIndex: 0)
+                            p.projectEntries.append(newEntry)
                     }
                 }
             }
