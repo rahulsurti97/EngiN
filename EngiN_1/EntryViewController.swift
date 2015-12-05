@@ -36,6 +36,22 @@ class EntryViewController: UIViewController {
         self.configureView()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        save()
+    }
+    
+    func edit() {
+        self.detailDescriptionLabel.editable = true
+        let saveButton = UIBarButtonItem(title: "Save", style: .Done, target: self, action: "save")
+        self.tabBarController?.navigationItem.setRightBarButtonItem(saveButton, animated: true)
+    }
+    
+    func save() {
+        self.detailDescriptionLabel.editable = false
+        let editButton = UIBarButtonItem(barButtonSystemItem: .Edit , target: self, action: "edit")
+        self.tabBarController?.navigationItem.setRightBarButtonItem(editButton, animated: true)
+    }
+    
     override func viewWillDisappear(animated: Bool) {
         entryItem?.entryText = detailDescriptionLabel.text
         entryDelegate?.updateEntryText(self, entry: entryItem!)

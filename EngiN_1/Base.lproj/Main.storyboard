@@ -331,11 +331,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="SjD-cK-PTB">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Entry Text" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="SjD-cK-PTB">
                                 <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -349,7 +348,7 @@
                             <constraint firstItem="SjD-cK-PTB" firstAttribute="leading" secondItem="sbX-y9-dV6" secondAttribute="leading" id="i0d-gZ-gyb"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Entry" id="D0Q-jW-3zz"/>
+                    <tabBarItem key="tabBarItem" title="Entry" image="Entry.png" id="D0Q-jW-3zz"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="detailDescriptionLabel" destination="SjD-cK-PTB" id="8Mt-pp-xYD"/>
@@ -357,7 +356,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ekw-WQ-a5Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1984.5" y="317.5"/>
+            <point key="canvasLocation" x="1968.5" y="-527.5"/>
         </scene>
         <!--Team Members-->
         <scene sceneID="o8R-hR-lbC">
@@ -395,11 +394,11 @@
                             <outlet property="delegate" destination="xMa-k8-Nhs" id="BsU-PL-2FA"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Team Members" id="qOo-f1-BGs"/>
+                    <tabBarItem key="tabBarItem" title="Team Members" image="TeamMembers.png" id="qOo-f1-BGs"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BIn-kw-WTu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1984.5" y="-533.5"/>
+            <point key="canvasLocation" x="1968.5" y="349.5"/>
         </scene>
         <!--Entry Tab Bar View Controller-->
         <scene sceneID="hMh-7o-Bww">
@@ -414,8 +413,8 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="xMa-k8-Nhs" kind="relationship" relationship="viewControllers" id="ndd-7w-jlB"/>
                         <segue destination="rrf-k7-KIw" kind="relationship" relationship="viewControllers" id="5No-YC-3BI"/>
+                        <segue destination="xMa-k8-Nhs" kind="relationship" relationship="viewControllers" id="ndd-7w-jlB"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1tu-R3-xJg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -441,4 +440,8 @@
             <point key="canvasLocation" x="-891.5" y="742.5"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Entry.png" width="25" height="25"/>
+        <image name="TeamMembers.png" width="25" height="25"/>
+    </resources>
 </document>

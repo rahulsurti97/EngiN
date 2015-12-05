@@ -17,11 +17,13 @@ class LibraryTableViewController: UITableViewController, EntryDelegate, TeamMemb
         super.viewDidLoad()
         self.clearsSelectionOnViewWillAppear = true
         
-        // Creates add button in top right of navigation bar.
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "promptForTitle")
+        // Adds edit button in top right.
+        self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        // Adds edit button in bottom left.
-        self.setToolbarItems([self.editButtonItem()], animated: true)
+        // Sets add button in bottom right of toolbar.
+        let addButton = UIBarButtonItem(barButtonSystemItem: .Add , target: self, action: "promptForTitle")
+        let flexButtonItem = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: "")
+        self.setToolbarItems([flexButtonItem, addButton], animated: false)
         
         // Upon first opening app, creates a sample project.
         insertNewProject("EngiN")

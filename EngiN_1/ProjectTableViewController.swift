@@ -34,12 +34,14 @@ class ProjectTableViewController: UITableViewController, EntryModifiedDelegate {
         super.viewDidLoad()
         self.clearsSelectionOnViewWillAppear = true
         
-        // Creates add button in top right of navigation bar.
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "promptForTitle")
+        // Adds edit button in top right.
+        self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        // Enables toolbar and adds edit button in bottom left.
-        self.setToolbarItems([self.editButtonItem()], animated: true)
-        
+        // Sets add button in bottom right of toolbar.
+        let addButton = UIBarButtonItem(barButtonSystemItem: .Add , target: self, action: "promptForTitle")
+        let flexButtonItem = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: "")
+        self.setToolbarItems([flexButtonItem, addButton], animated: false)
+
         // Update View
         self.configureView()
     }
@@ -204,6 +206,7 @@ class ProjectTableViewController: UITableViewController, EntryModifiedDelegate {
                 controller.entryDelegate = self
                 controller.entryItem = entry
                 controller.navigationItem.title = entry.entryTitle
+                controller.viewControllers![0].tabBarItem.title = "Entry"
             }
         }
     }

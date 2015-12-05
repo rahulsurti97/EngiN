@@ -19,14 +19,16 @@ class EntryTabBarViewController: UITabBarController, MemberPresentDelegate, Entr
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        let teamMemberVC = self.viewControllers![0] as! EntryTeamMemberTableViewController
-        teamMemberVC.teamMembers = (entryItem?.membersPresent)!
-        teamMemberVC.presentDelegate = self
         
-        let entryVC = self.viewControllers![self.viewControllers!.count-1] as! EntryViewController
+        let entryVC = self.viewControllers![0] as! EntryViewController
         entryVC.entryItem = self.entryItem
         entryVC.entryDelegate = self
-        // Do any additional setup after loading the view.
+        //entryVC.tabBarItem.image =
+
+        
+        let teamMemberVC = self.viewControllers![self.viewControllers!.count-1] as! EntryTeamMemberTableViewController
+        teamMemberVC.teamMembers = (entryItem?.membersPresent)!
+        teamMemberVC.presentDelegate = self
     }
 
     override func didReceiveMemoryWarning() {
