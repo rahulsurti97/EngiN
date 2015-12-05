@@ -34,6 +34,11 @@ class EntryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureView()
+        self.navigationController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "My Back Button", style: .Plain, target: self, action: "")
+    }
+    
+    func back() {
+        navigationController?.popViewControllerAnimated(true)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -52,10 +57,10 @@ class EntryViewController: UIViewController {
         self.tabBarController?.navigationItem.setRightBarButtonItem(editButton, animated: true)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    /*override func viewWillDisappear(animated: Bool) {
         entryItem?.entryText = detailDescriptionLabel.text
         entryDelegate?.updateEntryText(self, entry: entryItem!)
-    }
+    }*/
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -215,17 +215,15 @@ class LibraryTableViewController: UITableViewController, EntryDelegate, TeamMemb
         return projectToReturn
     }
     
-    func updateTeamMembers(controller: TeamMemberTableViewController, teamMembers: [Member], atProject: String) -> [Member] {
-        var membersToReturn: [Member] = []
+    func updateTeamMembers(controller: TeamMemberTableViewController, atProject: Project) -> Project {
         // Find correct project to modify
         for project in self.projects {
             if let p = (project as? Project) {
-                if atProject == p.projectTitle {
-                    p.projectMembers = teamMembers
-                    membersToReturn = teamMembers
+                if atProject.projectTitle == p.projectTitle {
+                    p.projectMembers = atProject.projectMembers
                 }
             }
         }
-        return membersToReturn
+        return atProject
     }
 }

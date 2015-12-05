@@ -23,8 +23,6 @@ class EntryTabBarViewController: UITabBarController, MemberPresentDelegate, Entr
         let entryVC = self.viewControllers![0] as! EntryViewController
         entryVC.entryItem = self.entryItem
         entryVC.entryDelegate = self
-        //entryVC.tabBarItem.image =
-
         
         let teamMemberVC = self.viewControllers![self.viewControllers!.count-1] as! EntryTeamMemberTableViewController
         teamMemberVC.teamMembers = (entryItem?.membersPresent)!

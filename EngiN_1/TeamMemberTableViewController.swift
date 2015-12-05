@@ -8,11 +8,14 @@
 
 import UIKit
 protocol TeamMemberDelegate {
-    func updateTeamMembers(controller: TeamMemberTableViewController, teamMembers: [Member], atProject: String) -> [Member]
+    func updateTeamMembers(controller: TeamMemberTableViewController, atProject: Project) -> Project
+}
+protocol ProjectDelegate {
+    func updateProject(controller: TeamMemberTableViewController, project: Project) -> Project
 }
 class TeamMemberTableViewController: UITableViewController {
 
-    var members = [Member]()
+    var projectItem: Project?
     
     var delegate: TeamMemberDelegate?
     
@@ -55,7 +58,7 @@ class TeamMemberTableViewController: UITableViewController {
             
             // Determines if name is valid, ie. not previously used.
             let nameIsOK: Bool = {() -> Bool in
-                for m in self.members {
+                for m in (self.projectItem?.projectMembers)! {
                     if m.memberName == memberName {
                         return false
                     }
@@ -76,14 +79,10 @@ class TeamMemberTableViewController: UITableViewController {
     
     func insertNewMember(memberName: String, role: String) {
         // Inserts member in the members array.
-        members.append(Member(name: memberName, role: role, bio: ""))
-        let indexPath = NSIndexPath(forRow: members.count - 1, inSection: 0)
+        projectItem?.projectMembers.append(Member(name: memberName, role: role, bio: ""))
+        let indexPath = NSIndexPath(forRow: (projectItem?.projectMembers.count)! - 1, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-        
-        // Inserts the entry into the project at the scope of the library.
-        if let delegate = self.delegate {
-            delegate.updateTeamMembers(self, teamMembers: members, atProject: self.navigationItem.title!)
-        }
+        self.delegate!.updateTeamMembers(self, atProject: self.projectItem!)
     }
 
     override func didReceiveMemoryWarning() {
@@ -98,13 +97,15 @@ class TeamMemberTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return members.count
+        return (projectItem?.projectMembers.count)!
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("TeamMember", forIndexPath: indexPath)
-        cell.textLabel?.text = members[indexPath.row].memberName
-        cell.detailTextLabel?.text = members[indexPath.row].memberRole
+        if let members = projectItem?.projectMembers {
+            cell.textLabel?.text = members[indexPath.row].memberName
+            cell.detailTextLabel?.text = members[indexPath.row].memberRole
+        }
         cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         return cell
     }
@@ -117,7 +118,7 @@ class TeamMemberTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             // Prompts user to confirm removal of entry.
-            let alert = UIAlertController(title: "Are you sure you want to remove this team member?", message: "This will remove him/her from all entries", preferredStyle: .Alert)
+            let alert = UIAlertController(title: "Are you sure you want to remove this team member?", message: "This will remove him/her from all future entries", preferredStyle: .Alert)
             
             // Do not remove member if user hits "Cancel".
             alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action) -> Void in /* Do nothing */  }))
@@ -125,14 +126,9 @@ class TeamMemberTableViewController: UITableViewController {
             // Remove member if user hits "Delete".
             alert.addAction(UIAlertAction(title: "Remove", style: .Default, handler: { (action) -> Void in
                 // Removes the entry of the project at the scope of the library.
-                /*if let delegate = self.delegate {
-                    if let project = self.projectItem {
-                        let entry = self.entries[indexPath.row] as! Entry
-                        delegate.updateEntry(self, newEntry: entry, atProject: project, type: 1)
-                    }
-                }*/
-                self.members.removeAtIndex(indexPath.row)
+                self.projectItem?.projectMembers.removeAtIndex(indexPath.row)
                 tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                self.delegate?.updateTeamMembers(self, atProject: self.projectItem!)
             }))
             
             // Present the alert.

@@ -70,7 +70,7 @@ class ProjectMenuTableViewController: UITableViewController, EntryDelegate, Team
         if segue.identifier == "showTeamMembers" {
             if let c = segue.destinationViewController as? TeamMemberTableViewController {
                 c.delegate = self
-                c.members = (project?.projectMembers)!
+                c.projectItem = project
                 c.navigationItem.title = project!.projectTitle
             }
         }
@@ -85,14 +85,14 @@ class ProjectMenuTableViewController: UITableViewController, EntryDelegate, Team
     // Calls delegate in library method to update entries at scope of Library.
     func updateEntry(controller: ProjectTableViewController, newEntry: Entry, atProject: Project, type: Int) -> Project {
         // Set project to updated project and refresh the labels.
-        project = delegate?.updateEntry(controller, newEntry: newEntry, atProject: atProject, type: type)
+        self.project = delegate?.updateEntry(controller, newEntry: newEntry, atProject: atProject, type: type)
         configureView()
         return project!
     }
     
-    func updateTeamMembers(controller: TeamMemberTableViewController, teamMembers: [Member], atProject: String) -> [Member] {
-        project?.projectMembers = (memberDelegate?.updateTeamMembers(controller, teamMembers: teamMembers, atProject: atProject))!
+    func updateTeamMembers(controller: TeamMemberTableViewController, atProject: Project) -> Project {
+        self.project = (memberDelegate?.updateTeamMembers(controller, atProject: atProject))
         configureView()
-        return (project?.projectMembers)!
+        return project!
     }
 }

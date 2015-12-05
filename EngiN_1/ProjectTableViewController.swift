@@ -109,12 +109,10 @@ class ProjectTableViewController: UITableViewController, EntryModifiedDelegate {
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
 
         // Inserts the entry into the project at the scope of the library.
-        if let delegate = self.delegate {
-            if let project = self.projectItem {
-                delegate.updateEntry(self, newEntry: myEntry, atProject: project, type: 0)
-            }
-        }
+        self.delegate?.updateEntry(self, newEntry: myEntry, atProject: self.projectItem!, type: 0)
     }
+    
+    
     
     // Creates a String for the current date.
     func currentDate() -> String {
