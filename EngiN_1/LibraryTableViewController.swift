@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LibraryTableViewController: UITableViewController, EntryDelegate, TeamMemberDelegate {
+class LibraryTableViewController: UITableViewController, EntryDelegate, TeamMemberDelegate, ProjectDescriptionDelegate {
     
     var projects = [AnyObject]()
     
@@ -87,11 +87,13 @@ class LibraryTableViewController: UITableViewController, EntryDelegate, TeamMemb
         // Creates new project; if first opening app, create a sample project.
         var myEntries: [Entry] = []
         var myMembers: [Member] = []
+        var myDescription: String = ""
         if first {
             myMembers = [Member(name: "Rahul", role: "Captain", bio: ""), Member(name: "Kevin", role: "Manager", bio: ""), Member(name: "Kanyon", role: "Programmer",bio: "")]
             myEntries = [Entry(title: "First Entry", date: currentDate(), text: "This is our project!", members: myMembers)]
+            myDescription = "Our goal for this project is to create a mobile application that could replace conventional engineering notebooks by creating a platform to document ideas quickly and efficiently, as well as automate repetitive tasks to speed up the documentation process as a whole.\n\nSome features we have implemented are as follows:\n-Library contains list of all projects.\n-Project Home contains all entries, team members, and project description.\n-Upon \"Add\" of Project or Entry, user is prompted to give unique title.\n-Entry is view-only until edit button is pressed; edit button then becomes save button.  User can save save entry before returning to home to keep changes.\n-Team Members tab in Entry has ability to checkmark which team members were present in that meeting.  Follows same protocol for saving as Entry.\n-Project Description follows same protocol for saving as Entry."
         }
-        let project = Project(title: myProjectTitle, date: currentDate(), entries: myEntries, members: myMembers)
+        let project = Project(title: myProjectTitle, date: currentDate(), entries: myEntries, members: myMembers, description: myDescription)
         
         // Inserts project in the projects array.
         projects.append(project)
@@ -179,6 +181,7 @@ class LibraryTableViewController: UITableViewController, EntryDelegate, TeamMemb
                 if let c = (segue.destinationViewController as? ProjectMenuTableViewController) {
                     c.delegate = self
                     c.memberDelegate = self
+                    c.descriptionDelegate = self
                     c.project = (projects[indexPath.row] as! Project)
                     c.navigationItem.title = "Home"
                 }
@@ -221,6 +224,17 @@ class LibraryTableViewController: UITableViewController, EntryDelegate, TeamMemb
             if let p = (project as? Project) {
                 if atProject.projectTitle == p.projectTitle {
                     p.projectMembers = atProject.projectMembers
+                }
+            }
+        }
+        return atProject
+    }
+    
+    func updateProjectDescription(controller: ProjectDescriptionViewController, atProject: Project) -> Project {
+        for project in self.projects {
+            if let p = (project as? Project) {
+                if atProject.projectTitle == p.projectTitle {
+                    p.projectDescription = atProject.projectDescription
                 }
             }
         }

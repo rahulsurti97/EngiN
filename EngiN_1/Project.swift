@@ -14,17 +14,20 @@ class Project {
     var projectDate: String
     var projectEntries: [Entry]
     var projectMembers: [Member]
+    var projectDescription: String
     
-    init(title: String, date: String, entries: [Entry], members: [Member]) {
+    init(title: String, date: String, entries: [Entry], members: [Member], description: String) {
         projectTitle = title
         projectDate = date
         projectEntries = entries
         projectMembers = members
+        projectDescription = description
     }
     init() {
         projectTitle = ""
         projectDate = ""
         projectEntries = []
         projectMembers = []
+        projectDescription = ""
     }
 }

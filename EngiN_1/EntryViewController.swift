@@ -15,6 +15,8 @@ class EntryViewController: UIViewController {
     
     @IBOutlet weak var detailDescriptionLabel: UITextView!
     
+    var originalText: String = ""
+    
     var entryDelegate: EntryChangedDelegate?
     
     var entryItem: Entry? {
@@ -24,21 +26,13 @@ class EntryViewController: UIViewController {
     
     func configureView() {
         // Update the user interface for the detail item.
-        if let entry = self.entryItem {
-            if let label = self.detailDescriptionLabel {
-                label.text = entry.entryText
-            }
-        }
+        self.detailDescriptionLabel?.text = self.entryItem?.entryText
+        originalText = (self.entryItem?.entryText)!
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureView()
-        self.navigationController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "My Back Button", style: .Plain, target: self, action: "")
-    }
-    
-    func back() {
-        navigationController?.popViewControllerAnimated(true)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -49,18 +43,21 @@ class EntryViewController: UIViewController {
         self.detailDescriptionLabel.editable = true
         let saveButton = UIBarButtonItem(title: "Save", style: .Done, target: self, action: "save")
         self.tabBarController?.navigationItem.setRightBarButtonItem(saveButton, animated: true)
+        self.tabBarController?.navigationItem.rightBarButtonItem?.tintColor = UIColor.redColor()
     }
     
     func save() {
         self.detailDescriptionLabel.editable = false
         let editButton = UIBarButtonItem(barButtonSystemItem: .Edit , target: self, action: "edit")
         self.tabBarController?.navigationItem.setRightBarButtonItem(editButton, animated: true)
+        self.tabBarController?.navigationItem.rightBarButtonItem?.tintColor = UIColor.blueColor()
+        originalText = detailDescriptionLabel.text
     }
     
-    /*override func viewWillDisappear(animated: Bool) {
-        entryItem?.entryText = detailDescriptionLabel.text
+    override func viewWillDisappear(animated: Bool) {
+        entryItem?.entryText = originalText
         entryDelegate?.updateEntryText(self, entry: entryItem!)
-    }*/
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -13,6 +13,8 @@ protocol MemberPresentDelegate {
 }
 class EntryTeamMemberTableViewController: UITableViewController {
 
+    var originalMembers = [(member: Member, present: Bool)]()
+    
     var teamMembers = [(member: Member, present: Bool)]()
     
     var presentDelegate: MemberPresentDelegate?
@@ -27,6 +29,30 @@ class EntryTeamMemberTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    override func viewWillAppear(animated: Bool) {
+        save()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        teamMembers = (presentDelegate?.updatePresent(self, members: originalMembers))!
+    }
+    
+    var editable: Bool = false
+    func edit() {
+        editable = true
+        let saveButton = UIBarButtonItem(title: "Save", style: .Done, target: self, action: "save")
+        self.tabBarController?.navigationItem.setRightBarButtonItem(saveButton, animated: true)
+        self.tabBarController?.navigationItem.rightBarButtonItem?.tintColor = UIColor.redColor()
+    }
+    
+    func save() {
+        editable = false
+        let editButton = UIBarButtonItem(barButtonSystemItem: .Edit , target: self, action: "edit")
+        self.tabBarController?.navigationItem.setRightBarButtonItem(editButton, animated: true)
+        self.tabBarController?.navigationItem.rightBarButtonItem?.tintColor = UIColor.blueColor()
+        originalMembers = teamMembers
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -41,6 +67,7 @@ class EntryTeamMemberTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("TeamMember", forIndexPath: indexPath)
         let tuple = teamMembers[indexPath.row]
         cell.textLabel?.text = tuple.member.memberName
+        cell.detailTextLabel?.text = tuple.member.memberRole
         if tuple.present {
             cell.accessoryType = UITableViewCellAccessoryType.Checkmark }
         else { cell.accessoryType = UITableViewCellAccessoryType.None }
@@ -48,14 +75,15 @@ class EntryTeamMemberTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        teamMembers[indexPath.row].present = !teamMembers[indexPath.row].present
-        teamMembers = (presentDelegate?.updatePresent(self, members: teamMembers))!
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        if self.tableView.cellForRowAtIndexPath(indexPath)?.accessoryType == UITableViewCellAccessoryType.None {
-            self.tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = UITableViewCellAccessoryType.Checkmark
-        }
-        else {
-            self.tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = UITableViewCellAccessoryType.None
+        if editable {
+            teamMembers[indexPath.row].present = !teamMembers[indexPath.row].present
+            if self.tableView.cellForRowAtIndexPath(indexPath)?.accessoryType == UITableViewCellAccessoryType.None {
+                self.tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = UITableViewCellAccessoryType.Checkmark
+            }
+            else {
+                self.tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = UITableViewCellAccessoryType.None
+            }
         }
     }
     

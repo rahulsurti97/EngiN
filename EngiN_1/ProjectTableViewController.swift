@@ -104,7 +104,6 @@ class ProjectTableViewController: UITableViewController, EntryModifiedDelegate {
         
         // Inserts entry in the entries array.
         entries.append(myEntry)
-        //entries.insert(myEntry, atIndex: 0)
         let indexPath = NSIndexPath(forRow: entries.count - 1, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
 
