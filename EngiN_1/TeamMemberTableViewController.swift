@@ -23,11 +23,17 @@ class TeamMemberTableViewController: UITableViewController {
         super.viewDidLoad()
         self.clearsSelectionOnViewWillAppear = true
         
-        // Creates add button in top right of navigation bar.
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "promptForName")
+        // Adds edit button in top right.
+        self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        // Enables toolbar and adds edit button in bottom left.
-        self.setToolbarItems([self.editButtonItem()], animated: true)
+        // Sets add button in bottom right of toolbar.
+        let addButton = UIBarButtonItem(barButtonSystemItem: .Add , target: self, action: "promptForName")
+        let flexButtonItem = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: "")
+        self.setToolbarItems([flexButtonItem, addButton], animated: false)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        self.navigationController?.setToolbarHidden(false, animated: true)
     }
     
     private var firstAttempt = true
@@ -106,7 +112,6 @@ class TeamMemberTableViewController: UITableViewController {
             cell.textLabel?.text = members[indexPath.row].memberName
             cell.detailTextLabel?.text = members[indexPath.row].memberRole
         }
-        cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         return cell
     }
 
