@@ -50,7 +50,6 @@ class EntryViewController: UIViewController {
         self.detailDescriptionLabel.editable = false
         let editButton = UIBarButtonItem(barButtonSystemItem: .Edit , target: self, action: "edit")
         self.tabBarController?.navigationItem.setRightBarButtonItem(editButton, animated: true)
-        self.tabBarController?.navigationItem.rightBarButtonItem?.tintColor = UIColor.blueColor()
         originalText = detailDescriptionLabel.text
     }
     

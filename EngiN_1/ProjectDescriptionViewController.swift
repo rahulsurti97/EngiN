@@ -50,7 +50,6 @@ class ProjectDescriptionViewController: UIViewController {
         self.detailDescriptionLabel.editable = false
         let editButton = UIBarButtonItem(barButtonSystemItem: .Edit , target: self, action: "edit")
         self.navigationItem.setRightBarButtonItem(editButton, animated: true)
-        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.blueColor()
         originalText = detailDescriptionLabel.text
     }
     

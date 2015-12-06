@@ -29,6 +29,7 @@ class EntryTeamMemberTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    
     override func viewWillAppear(animated: Bool) {
         save()
     }
@@ -49,7 +50,6 @@ class EntryTeamMemberTableViewController: UITableViewController {
         editable = false
         let editButton = UIBarButtonItem(barButtonSystemItem: .Edit , target: self, action: "edit")
         self.tabBarController?.navigationItem.setRightBarButtonItem(editButton, animated: true)
-        self.tabBarController?.navigationItem.rightBarButtonItem?.tintColor = UIColor.blueColor()
         originalMembers = teamMembers
     }
     

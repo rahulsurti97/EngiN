@@ -100,7 +100,7 @@ class ProjectTableViewController: UITableViewController, EntryModifiedDelegate {
     
     func insertNewEntry(myEntryTitle: String) {
         // Creates Entry object.
-        let myEntry = Entry(title: myEntryTitle, date: currentDate(), text: "Sample Text", members: (projectItem?.projectMembers)!)
+        let myEntry = Entry(title: myEntryTitle, date: currentDate(), text: "", members: (projectItem?.projectMembers)!)
         
         // Inserts entry in the entries array.
         entries.append(myEntry)
