@@ -12,9 +12,9 @@ The Mobile Engineering Notebook
     -Project Home contains all entries, team members, and project description.
     -Upon "Add" of Project or Entry, user is prompted to give unique title.
     -Entry is view-only until edit button is pressed; edit button then becomes save button.  
-    User can save save entry before returning to home to keep changes.
+        User can save save entry before returning to home to keep changes.
     -Team Members tab in Entry has ability to checkmark which team members were present in that meeting.  
-    Follows same protocol for saving as Entry.
+        Follows same protocol for saving as Entry.
     -Project Description follows same protocol for saving as Entry.
 
     For best use of this application, use iPhone 5S (4 inch).
