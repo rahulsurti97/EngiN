@@ -1,7 +1,7 @@
 # EngiN
 The Mobile Engineering Notebook
 
-    Goal for this project is to create a mobile application that could replace 
+    Goal for this project is to create an iOS application that could replace 
     conventional engineering notebooks by creating a platform to document ideas 
     quickly and efficiently, as well as automate repetitive tasks to speed up t
     he documentation process as a whole.
